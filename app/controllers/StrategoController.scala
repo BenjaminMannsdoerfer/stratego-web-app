@@ -8,7 +8,7 @@ import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
-
+  gameController.getSize
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
   def home: Action[AnyContent] = Action {
@@ -17,6 +17,10 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
 
   def about: Action[AnyContent] = Action {
     Ok(views.html.about())
+  }
+
+  def game = Action {
+    Ok(views.html.playGame(gameController))
   }
 
   def setPlayer(player1: String, player2: String): Action[AnyContent] = Action {
@@ -33,13 +37,14 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
     else
       gameController.setPlayers(player1 + " " + player2)
-    Ok("Hello " + gameController.playerListBuffer(0) +
-      " and " + gameController.playerListBuffer(1) + "!")
+    //Ok("Hello " + gameController.playerListBuffer(0) +
+    //  " and " + gameController.playerListBuffer(1) + "!")
+    Ok(views.html.initGame(gameController))
   }
 
   def init: Action[AnyContent] = Action {
     gameController.initMatchfield
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def setCharacter(row:Int, col:Int, charac:String): Action[AnyContent] = Action {

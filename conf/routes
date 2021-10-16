@@ -8,6 +8,8 @@ GET     /                               controllers.StrategoController.home
 
 GET     /about                          controllers.StrategoController.about
 
+GET     /game                           controllers.StrategoController.game
+
 GET     /stratego                       controllers.StrategoController.stratego
 
 GET     /enterPlayer                    controllers.StrategoController.enterPlayer(player1: String, player2:String)
