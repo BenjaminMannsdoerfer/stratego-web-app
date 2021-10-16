@@ -1,37 +1,48 @@
 package controllers
 
 import javax.inject._
-
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.GameStatus
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-  val gameController = Stratego.controller
+  val gameController: ControllerInterface = Stratego.controller
 
-  def printStratego = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
+  def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
-  def home = Action {
+  def home: Action[AnyContent] = Action {
     Ok(views.html.index())
   }
 
-  def about = Action {
+  def about: Action[AnyContent] = Action {
     Ok(views.html.about())
   }
 
-  def setPlayer(player1: String, player2: String) = Action {
-    gameController.setPlayers(player1 + " " + player2)
+  def setPlayer(player1: String, player2: String): Action[AnyContent] = Action {
+    if (player1.isEmpty && player2.isEmpty)
+      gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
+    else
+      gameController.setPlayers(player1 + " " + player2)
     Ok("Hello " + gameController.playerListBuffer(0) +
       " and " + gameController.playerListBuffer(1) + "!")
   }
 
-  def init = Action {
+  def enterPlayer(player1: String, player2: String): Action[AnyContent] = Action {
+    if (player1.isEmpty && player2.isEmpty)
+      gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
+    else
+      gameController.setPlayers(player1 + " " + player2)
+    Ok("Hello " + gameController.playerListBuffer(0) +
+      " and " + gameController.playerListBuffer(1) + "!")
+  }
+
+  def init: Action[AnyContent] = Action {
     gameController.initMatchfield
     Ok(printStratego)
   }
 
-  def setCharacter(row:Int, col:Int, charac:String) = Action {
+  def setCharacter(row:Int, col:Int, charac:String): Action[AnyContent] = Action {
     gameController.set(row,col,charac)
     Ok(printStratego)
   }
