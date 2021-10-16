@@ -16,6 +16,10 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
     Ok(views.html.index())
   }
 
+  def about = Action {
+    Ok(views.html.about())
+  }
+
   def setPlayer(player1: String, player2: String) = Action {
     gameController.setPlayers(player1 + " " + player2)
     Ok("Hello " + gameController.playerListBuffer(0) +

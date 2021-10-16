@@ -6,6 +6,8 @@
 
 GET     /                               controllers.StrategoController.home
 
+GET     /about                          controllers.StrategoController.about
+
 GET     /stratego                       controllers.StrategoController.stratego
 
 GET     /setPlayer/:player1/:player2    controllers.StrategoController.setPlayer(player1: String, player2:String)
