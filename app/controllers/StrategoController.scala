@@ -4,11 +4,12 @@ import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Game
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
-  gameController.getSize
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
   def home: Action[AnyContent] = Action {
@@ -28,17 +29,6 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
     else
       gameController.setPlayers(player1 + " " + player2)
-    Ok("Hello " + gameController.playerListBuffer(0) +
-      " and " + gameController.playerListBuffer(1) + "!")
-  }
-
-  def enterPlayer(player1: String, player2: String): Action[AnyContent] = Action {
-    if (player1.isEmpty && player2.isEmpty)
-      gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
-    else
-      gameController.setPlayers(player1 + " " + player2)
-    //Ok("Hello " + gameController.playerListBuffer(0) +
-    //  " and " + gameController.playerListBuffer(1) + "!")
     Ok(views.html.initGame(gameController))
   }
 
@@ -47,23 +37,27 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
     Ok(views.html.playGame(gameController))
   }
 
-  def setCharacter(row:Int, col:Int, charac:String): Action[AnyContent] = Action {
-    gameController.set(row,col,charac)
-    Ok(printStratego)
+  def setCharacter(row:Int, col:Int, charac:Char): Action[AnyContent] = Action {
+    gameController.set(row,col,charac.toString)
+    if(gameController.playerListBuffer(1).characterList.size==0) {
+      Ok(views.html.playGame(gameController))
+    } else {
+      Ok(views.html.initGame(gameController))
+    }
   }
 
   def move(dir:Char,row:Int,col:Int) = Action {
     gameController.move(dir, row, col)
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def attack (rowA:Int, colA:Int, rowD:Int, colD:Int) = Action {
     gameController.attack(rowA,colA, rowD, colD)
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def stratego = Action {
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def saveGame = Action {
