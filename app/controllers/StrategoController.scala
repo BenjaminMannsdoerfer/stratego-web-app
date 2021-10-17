@@ -4,8 +4,6 @@ import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
-import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Game
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
