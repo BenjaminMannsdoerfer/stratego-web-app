@@ -1,8 +1,12 @@
 @(controller: de.htwg.se.stratego.controller.controllerComponent.ControllerInterface)
 
 @main("Stratego") {
+    <center>
     <h1>Welcome to Stratego</h1>
-    <h2>play the game</h2>
+        <form action=/>
+        <button>New Game</button>
+        </form>
+    <h2>play the game @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
     <form action=/moveChar>
         <label>Direction</label>
         <input type="text" id="dir" name="dir" value="">
@@ -143,4 +147,19 @@
         }
         </table>
     </div>
+        <div>
+            <form action=/undo>
+                <button>undo</button>
+            </form>
+            <form action=/redo>
+                <button>redo</button>
+            </form>
+            <form action=/save>
+                <button>save</button>
+            </form>
+            <form action=/load>
+                <button>load</button>
+            </form>
+        </div>
+    </center>
 }

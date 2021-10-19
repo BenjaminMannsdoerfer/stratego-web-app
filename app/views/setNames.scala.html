@@ -1,7 +1,11 @@
 @()
 
 @main("Stratego") {
+    <center>
     <h1>Welcome to Stratego</h1>
+        <form action=/>
+            <button>New Game</button>
+        </form>
     <h2>Please enter your Names</h2>
     <form action=/setPlayer>
         <label>Player 1</label>
@@ -10,6 +14,8 @@
         <label>Player 2</label>
         <input type="text"  id="player2" name="player2" value="">
         <br>
+        <br>
         <input type="submit" value="Play">
     </form>
+    </center>
 }

@@ -1,8 +1,12 @@
 @(controller: de.htwg.se.stratego.controller.controllerComponent.ControllerInterface)
 
 @main("Stratego") {
+    <center>
     <h1>Welcome to Stratego</h1>
-    <h2>Enter the figures</h2>
+        <form action=/>
+        <button>New Game</button>
+        </form>
+    <h2>Enter the figures @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
     <br>
     <form action=/setChar>
         <label>Row</label>
@@ -13,6 +17,7 @@
         <br>
         <label>Character</label>
         <input type="text" id="charac" name="charac" value="">
+        <br>
         <br>
         <input type="submit" value="setCharacter">
     </form>
@@ -129,6 +134,8 @@
         </table>
     </div>
     <form action=/init>
+        <br>
         <input type="submit" value="set characters automatically">
     </form>
+    </center>
 }

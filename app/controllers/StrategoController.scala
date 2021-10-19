@@ -60,36 +60,36 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
 
   def saveGame = Action {
     gameController.save
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def loadGame = Action {
     gameController.load
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def undoGame = Action {
     gameController.undo
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def redoGame = Action {
     gameController.redo
-    Ok(printStratego)
+    Ok(views.html.playGame(gameController))
   }
 
   def smallGame = Action {
-    val smallMatchfield = gameController.createNewMatchfieldSize(4)
+    gameController.createNewMatchfieldSize(4)
     Ok(views.html.setNames())
   }
 
   def mediumGame = Action {
-    val mediumMatchfield = gameController.createNewMatchfieldSize(7)
+    gameController.createNewMatchfieldSize(7)
     Ok(views.html.setNames())
   }
 
   def largeGame = Action {
-    val largeMatchfield = gameController.createNewMatchfieldSize(10)
+    gameController.createNewMatchfieldSize(10)
     Ok(views.html.setNames())
   }
 }
