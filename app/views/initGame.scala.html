@@ -1,13 +1,18 @@
 @(controller: de.htwg.se.stratego.controller.controllerComponent.ControllerInterface)
 
 @main("Stratego") {
-    <center>
-    <h1>Welcome to Stratego</h1>
-        <form action=/>
-        <button>New Game</button>
-        </form>
-    <h2>Enter the figures @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
-    <br>
+    <div class="center">
+        <img src="@routes.Assets.versioned("images/media/stratego-header-home-transparent.png")" alt="stratego-header-init"/>
+        <ul class="topnav-init">
+            <a href="/">New Game</a>
+            <a href="/about">About</a>
+            <a href="/load">Load</a>
+        </ul>
+        @if(controller.currentPlayerIndex == 0) {
+            <h2 class="color-blue">Enter the figures @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
+        } else {
+            <h2 class="color-red">Enter the figures @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
+        }
     <form action=/setChar>
         <label>Row</label>
         <input type="text" id="row" name="row" value="">
@@ -23,119 +28,176 @@
     </form>
     <br>
     <div>
-        <table>
+        <img src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_top.jpg")"/>
+        <div class="mid-border">
+            <img class="column-2 left" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
+            <table class="column-6">
         @for(row <- 0 until controller.getSize) {
             <tr>
             @for(col <- 0 until controller.getSize) {
                 @if(controller.getField.field(row, col).isSet) {
                     @if(controller.getField.field(row, col).colour.get.value == 0 && controller.playerListBuffer(0).characterList.size != 0) {
-                        <td>
+                        <td class="char-pic">
                         @controller.getField.field(row, col).character.get.figure.name match {
                             case "B" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "M" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "9" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "8" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "7" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "6" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "5" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "4" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "3" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "2" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "1" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                             case "F" => {
-                                <input type="image" src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="25" height="50"/>
+                                <div class="blue">
+                                <input type="image" src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="30" height="60"/>
+                                </div>
                             }
                         }
                         </td>
                     } else if(controller.getField.field(row,col).colour.get.value == 1 && controller.playerListBuffer(0).characterList.size!=1) {
-                    <td>
+                    <td class="test" height="100px" width="100px">
                     @controller.getField.field(row, col).character.get.figure.name match {
                         case "B" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "M" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "9" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "8" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "7" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "6" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "5" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "4" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "3" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "2" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "1" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                         case "F" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="25" height="50"/>
+                            <div class="red">
+                            <img src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="30" height="60"/>
+                            </div>
                         }
                     }
                     </td>
                     } else if(controller.playerListBuffer(0).characterList.size==0) {
-                    <td>
-                        <img src="@routes.Assets.versioned("images/media/colors/stratego-blue.png")" alt="player" width="25" height="50"/>
+                    <td class="char-pic">
+                        <img src="@routes.Assets.versioned("images/media/colors/stratego-blue.png")" alt="player" width="30" height="60"/>
                     </td>
                     } else if(controller.playerListBuffer(1).characterList.size==0) {
                     <td>
-                        <img src="@routes.Assets.versioned("images/media/colors/stratego-red.png")" alt="player" width="25" height="50"/>
+                        <img src="@routes.Assets.versioned("images/media/colors/stratego-red.png")" alt="player" width="30" height="60"/>
                     </td>
                     }
                 } else if (controller.getField.isWater(row, col)){
-                <td>
-                    <img src="@routes.Assets.versioned("images/media/figures/stratego-water.png")" alt="water" width="25" height="50"/>
+                <td class="char-pic">
+                    <div class="hidden">
+                    </div>
                 </td>
                 } else {
-                <td action="/setCharacter">
-                    <img src="@routes.Assets.versioned("images/media/colors/stratego-black.PNG")" alt="black" width="25" height="50"/>
+                <td action="/setCharacter" class="char-pic">
+                    <div class="hidden">
+                    <img src="@routes.Assets.versioned("images/media/colors/stratego-black.PNG")" alt="black" width="30" height="60"/>
+                    </div>
                 </td>
                 }
             }
             </tr>
         }
         </table>
+            <img class="column-2 right" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_right.jpg")"/>
+        </div>
+        <img src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_bottom.jpg")"/>
     </div>
     <form action=/init>
         <br>
         <input type="submit" value="set characters automatically">
     </form>
-    </center>
+    </div>
 }

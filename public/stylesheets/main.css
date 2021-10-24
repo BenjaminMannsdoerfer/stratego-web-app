@@ -1,0 +1,121 @@
+.center {
+    text-align: center;
+    background-color: #fcf5da;
+}
+
+.color-blue {
+    color: rgba(20,98,206,255);
+}
+
+.color-red {
+    color: rgba(223,45,30,255);
+}
+
+.blue {
+    margin: auto;
+    background-color: rgba(20, 98,206,255);
+    height: 50px;
+    width: 25px;
+}
+
+.red {
+    margin: auto;
+    background-color: rgba(223,45,30,255);
+    height: 50px;
+    width: 25px;
+}
+
+.char-pic {
+    height: 75px;
+    width: 75px;
+}
+
+.hidden {
+    margin: auto;
+    height: 50px;
+    width: 25px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav-game {
+    background-color: rgba(192,141,43,255);
+    overflow: hidden;
+    padding-left: 37%;
+}
+
+.topnav-init {
+    background-color: rgba(192,141,43,255);
+    overflow: hidden;
+    padding-left: 43%;
+}
+
+/* Style the links inside the navigation bar */
+.topnav-game a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav-game a:hover {
+    background-color: rgba(20,98,206,255);;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav-game a.active {
+    background-color: #04AA6D;
+    color: gold;
+}
+
+/* Style the links inside the navigation bar */
+.topnav-init a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav-init a:hover {
+    background-color: rgba(223,45,30,255);
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav-init a.active {
+    background-color: #04AA6D;
+    color: gold;
+}
+
+
+.mid-border {
+    margin-top: -4px;
+    margin-bottom: -4px;
+}
+
+.column-2 left {
+    width: 20%;
+    position: relative;
+    float: left;
+}
+
+.column-2 right {
+    width: 20%;
+    position: relative;
+    float: right;
+}
+
+.column-6 {
+    background-image: url(../images/media/matchfield.png);
+    width: 800px;
+    height: 800px;
+    display: inline-block;
+    margin-left: -4px;
+    margin-right: -4px;
+}

@@ -22,7 +22,7 @@ GET     /setChar                        controllers.StrategoController.setCharac
 
 GET     /setCharacter/:row/:col/:charac controllers.StrategoController.setCharacter(row: Int, col:Int, charac: Char)
 
-GET     /moveChar                       controllers.StrategoController.move(dir: Char, row:Int, col:Int)
+GET     /moveChar/:row/:col             controllers.StrategoController.move(dir: Char, row:Int, col:Int)
 
 GET     /move/:dir/:row/:col            controllers.StrategoController.move(dir: Char, row:Int, col:Int)
 
