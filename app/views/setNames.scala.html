@@ -1,21 +1,29 @@
 @()
 
 @main("Stratego") {
+<body class=body_set xmlns="http://www.w3.org/1999/html">
     <center>
-    <h1>Welcome to Stratego</h1>
-        <form action=/>
-            <button>New Game</button>
+        <div id = "animated-example" class = "animated fadeOut">
+            <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
+        </div>
+        <div class = "new_game_button">
+            <form action=/ class="form_small">
+                <button class = a_button>New Game</button>
+            </form>
+        </div>
+        <h2>Please enter your Names</h2>
+        <form action=/setPlayer>
+            <div class="form_setplayer">
+                <label>Player 1</label>
+                <input type="text" id="player1" name="player1" value="" class="css-input">
+                <br>
+                <label>Player 2</label>
+                <input type="text"  id="player2" name="player2" value="" class="css-input">
+                <br>
+                <br>
+                <input type="submit" class ="a_button" value="Play">
+            </div>
         </form>
-    <h2>Please enter your Names</h2>
-    <form action=/setPlayer>
-        <label>Player 1</label>
-        <input type="text" id="player1" name="player1" value="">
-            <br>
-        <label>Player 2</label>
-        <input type="text"  id="player2" name="player2" value="">
-        <br>
-        <br>
-        <input type="submit" value="Play">
-    </form>
     </center>
+</body>
 }

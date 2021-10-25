@@ -1,18 +1,39 @@
 @()
 
 @main("Stratego") {
-    <center>
-    <h1>Welcome to Stratego</h1>
-    <h2>Please select fieldsize</h2>
-    <form action=/small>
-        <button> small </button>
-    </form>
-    <form action=/medium>
-        <button> medium </button>
-    </form>
-    <form action=/large>
-        <button> large </button>
-    </form>
-    <p><a href="/about" target="_blank">About our Game</a></p>
-    </center>
+    <body id = body>
+        <div id = "animated-example" class = "animated fadeOut">
+            <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
+        </div>
+        <div class = subtitle>
+            <h2>Please select fieldsize</h2>
+        </div>
+
+        <div class = all_buttons>
+            <form action=/small>
+                <button class = "a_button" id = "but1"> small </button>
+            </form>
+            <form action=/medium>
+                <button class = "a_button" id = "but2"> medium </button>
+            </form>
+            <form action=/large>
+                <button class = "a_button" id = "but3"> large </button>
+            </form>
+        </div>
+
+        <div class = about>
+            <p><a href="/about" target="_blank" >
+            <img src="@routes.Assets.versioned("images/media/info.png")" alt="player" width="80" height="80" />
+            </a>
+                <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
+                    <img src="@routes.Assets.versioned("images/media/github.png")"width="80" height="80"/>
+                </a>
+            </p>
+        </div>
+
+        <!--div class = git>
+            <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
+            <img src="@routes.Assets.versioned("images/media/github.png")"/>
+        </div-->
+    </body>
 }
