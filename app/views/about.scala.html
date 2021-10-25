@@ -8,58 +8,59 @@
         <link rel="shortcut icon" href="@routes.Assets.versioned("images/favicon.png")"/>
     </head>
     <body id = body_about>
-        <!--center-->
-        <h1 style="color:blue;text-align:center;">Stratego</h1>
-        <h2>A Project for Web-Technology</h2>
-        <div>
-            <img src="@routes.Assets.versioned("images/media/Stratego_plateau.jpg")" alt="Stratego Spielbrett" title="Spielbrett Stratego" width="669" height="500"/>
-        </div>
-        <div>
-            <h3>Gameplay:</h3>
-            <p> Stratego is a strategy board game for two players. Each player has 40 pieces representing different characters.
-                We modified the game a little bit so you can walk with all characters (except flag and bomb) just one field up, down, to the right or to the left. You also can attack the oppenents with your figures. To win the game you have to find and attack the flag of your enemy.
-                <br>
-                <br>
-                The figures are ranked from highest to lowest as follows:</p>
-            <ul>
-                <li><b>1. Bomb</b></li>
-                <li><b>2. Marshal</b></li>
-                <li><b>3. General</b></li>
-                <li><b>4. Colonel</b></li>
-                <li><b>5. Major</b></li>
-                <li><b>6. Captain</b></li>
-                <li><b>7. Lieutenant</b></li>
-                <li><b>8. Sergeant</b></li>
-                <li><b>9. Miner</b></li>
-                <li><b>10. Scout</b></li>
-                <li><b>11. Spy</b></li>
-                <li><b>12. Flag</b></li>
-            </ul>
-        </div>
-        <div>
-            <h3>Rules:</h3>
-            <ul>
-                <li>Flag is the most important figure</li>
-                <li>Miner and Bomb: only the miner can defuse the Bomb</li>
-                <li>Every other figure loses against the Bomb</li>
-                <li>Spy and Marshal: only Spy can beat the Marshal except the bomb</li>
-                <li>Flag and Bomb can’t be moved</li>
-            </ul>
-        </div>
-        <br>
-        <br>
-        <div>
-            <h3>Screenshots:</h3>
-            <img src="@routes.Assets.versioned("images/media/start_screen.png")" alt="Startscreen" title = "Startscreen" width="513" height="500"/>
-            <img src="@routes.Assets.versioned("images/media/game_screen.png")"  alt="Playfield Stratego" title="Playfield Stratego" width = "669" height="500"/>
-            <img src="@routes.Assets.versioned("images/media/move_screen.png")"  alt="Stratego Action" title = "Stratego Action" width = "669" height="500"/>
-        </div>
-        <div>
-            <h3>You want to contribute to our project?</h3>
-            <form action="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
-                <input type="submit" value="Our Github repository" />
-            </form>
-        </div>
-        <!--/center-->
+        <center>
+            <div id = "animated-example" class = "animated fadeOut">
+                <img src="@routes.Assets.versioned("images/media/stratego_title.png")" width:392px height:100px/>
+            </div>
+                <div class = "one">
+                    <img src="@routes.Assets.versioned("images/media/Stratego_plateau.jpg")" alt="Stratego Spielbrett" title="Spielbrett Stratego" width="669" height="500"/>
+                </div>
+                <div class = "two">
+                    <h3>Gameplay:</h3>
+                    <p> Stratego is a strategy board game for two players. Each player has 40 pieces representing different characters.
+                        We modified the game a little bit so you can walk with all characters (except flag and bomb) just one field up, down, to the right or to the left. You also can attack the oppenents with your figures. To win the game you have to find and attack the flag of your enemy.
+                        <br>
+                        <br>
+                        The figures are ranked from highest to lowest as follows:</p>
+                    <ul class="char">
+                        <li><b>1. Bomb</b></li>
+                        <li><b>2. Marshal</b></li>
+                        <li><b>3. General</b></li>
+                        <li><b>4. Colonel</b></li>
+                        <li><b>5. Major</b></li>
+                        <li><b>6. Captain</b></li>
+                        <li><b>7. Lieutenant</b></li>
+                        <li><b>8. Sergeant</b></li>
+                        <li><b>9. Miner</b></li>
+                        <li><b>10. Scout</b></li>
+                        <li><b>11. Spy</b></li>
+                        <li><b>12. Flag</b></li>
+                    </ul>
+                </div>
+            <div>
+                <h3>Rules:</h3>
+                <ul class = "char">
+                    <li>Flag is the most important figure</li>
+                    <li>Miner and Bomb: only the miner can defuse the Bomb</li>
+                    <li>Every other figure loses against the Bomb</li>
+                    <li>Spy and Marshal: only Spy can beat the Marshal except the bomb</li>
+                    <li>Flag and Bomb can’t be moved</li>
+                </ul>
+            </div>
+            <br>
+            <br>
+            <div>
+                <h3>Screenshots:</h3>
+                <img src="@routes.Assets.versioned("images/media/start_screen.png")" alt="Startscreen" title = "Startscreen" width="513" height="500"/>
+                <img src="@routes.Assets.versioned("images/media/game_screen.png")"  alt="Playfield Stratego" title="Playfield Stratego" width = "669" height="500"/>
+                <img src="@routes.Assets.versioned("images/media/move_screen.png")"  alt="Stratego Action" title = "Stratego Action" width = "669" height="500"/>
+            </div>
+            <div>
+                <h3>You want to contribute to our project?</h3>
+                <form action="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
+                    <input type="submit" value="Our Github repository" />
+                </form>
+            </div>
+        </center>
     </body>
 }
