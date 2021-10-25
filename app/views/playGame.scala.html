@@ -7,28 +7,12 @@
         <img src="@routes.Assets.versioned("images/media/stratego-header-home-transparent.png")" alt="stratego-header"/>
         <ul class="topnav-game">
             <a href="/">New Game</a>
-            <a href="/about">About</a>
+            <a href="/about" target="_blank">About</a>
             <a href="/undo#jump_header">Undo</a>
             <a href="/redo#jump_header">Redo</a>
             <a href="/save#jump_header">Save</a>
             <a href="/load#jump_header">Load</a>
         </ul>
-    <form action=/attackChar#jump_header>
-        <div>
-            <label class="column-4 label">Row of the attacker</label>
-            <label class="column-4 label">Col of the attacker</label>
-            <label class="column-4 label">Row of the defender</label>
-            <label class="column-4 label">Col of the defender</label>
-        </div>
-        <div>
-        <input class="column-4 field" type="text" id="rowA" name="rowA" value="">
-        <input class="column-4 field" type="text"  id="colA" name="colA" value="">
-        <input class="column-4 field" type="text"  id="rowD" name="rowD" value="">
-        <input class="column-4 field" type="text"  id="colD" name="colD" value="">
-
-        </div>
-        <input type="submit" value="attack">
-    </form>
         <div id="jump_header">
         @if(controller.currentPlayerIndex == 0) {
             <h2 class="color-blue">@controller.playerListBuffer(controller.currentPlayerIndex) it's your turn</h2>
@@ -46,7 +30,23 @@
     <div>
         <img src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_top.jpg")"/>
         <div class="mid-border">
-            <img class="column-2 left" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
+            <form action=/attackChar#jump_header class="form-attack">
+                <label class="label-set" id="rowA-label">Row of the attacker</label>
+                <input class="css-input" type="text" id="rowA" name="rowA" value="">
+                <br>
+                <label class="label-set">Col of the attacker</label>
+                <input class="css-input" type="text" id="colA" name="colA" value="">
+                <br>
+                <label class="label-set" id="rowD-label">Row of the defender</label>
+                <input class="css-input" type="text"  id="rowD" name="rowD" value="">
+                <br>
+                <label class="label-set">Col of the defender</label>
+                <input class="css-input" type="text"  id="colD" name="colD" value="">
+                <br>
+                <br>
+                <input class="a_button" type="submit" value="attack">
+            </form>
+            <img class="column-2 left" id="img-left-game" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
             <table class="column-6">
             @for(row <- 0 until controller.getSize) {
                 <tr>

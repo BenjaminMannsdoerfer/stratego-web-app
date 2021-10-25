@@ -1,44 +1,31 @@
 @()
 
 @main("Stratego") {
-    <body id = body>
-        <div id = "animated-example" class = "animated fadeOut">
-            <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
-        </div>
+    <div class="center-selection">
+        <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
         <ul class="topnav-init">
             <a href="/">New Game</a>
-            <a href="/about">About</a>
+            <a href="/about" target="_blank">About</a>
             <a href="/load">Load</a>
         </ul>
         <div class = subtitle>
-            <h2>Please select fieldsize</h2>
+            <h2>Please select the field size</h2>
         </div>
-
-        <div class = all_buttons>
+        <div class="container">
             <form action=/small>
-                <button class = "a_button" id = "but1"> small </button>
+                <button class="a_button" id="btn1"> small </button>
             </form>
-            <form action=/medium>
-                <button class = "a_button" id = "but2"> medium </button>
+            <form action=/medium id="form-btn">
+                <button class="a_button" id="btn2"> medium </button>
             </form>
             <form action=/large>
-                <button class = "a_button" id = "but3"> large </button>
+                <button class="a_button" id="btn3"> large </button>
             </form>
         </div>
-
-        <div class = about>
-            <p><a href="/about" target="_blank" >
-            <img src="@routes.Assets.versioned("images/media/info.png")" alt="player" width="80" height="80" />
-            </a>
+        <div class="about">
                 <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
                     <img src="@routes.Assets.versioned("images/media/github.png")"width="80" height="80"/>
                 </a>
-            </p>
         </div>
-
-        <!--div class = git>
-            <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
-            <img src="@routes.Assets.versioned("images/media/github.png")"/>
-        </div-->
-    </body>
+    </div>
 }
