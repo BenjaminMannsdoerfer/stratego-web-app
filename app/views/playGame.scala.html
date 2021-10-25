@@ -14,18 +14,19 @@
             <a href="/load#jump_header">Load</a>
         </ul>
     <form action=/attackChar#jump_header>
-        <label>Row of the attacker</label>
-        <input type="text" id="rowA" name="rowA" value="">
-        <br>
-        <label>Col of the attacker</label>
-        <input type="text"  id="colA" name="colA" value="">
-        <br>
-        <label>Row of the defender</label>
-        <input type="text"  id="rowD" name="rowD" value="">
-        <br>
-        <label>Col of the defender</label>
-        <input type="text"  id="colD" name="colD" value="">
-        <br>
+        <div>
+            <label class="column-4 label">Row of the attacker</label>
+            <label class="column-4 label">Col of the attacker</label>
+            <label class="column-4 label">Row of the defender</label>
+            <label class="column-4 label">Col of the defender</label>
+        </div>
+        <div>
+        <input class="column-4 field" type="text" id="rowA" name="rowA" value="">
+        <input class="column-4 field" type="text"  id="colA" name="colA" value="">
+        <input class="column-4 field" type="text"  id="rowD" name="rowD" value="">
+        <input class="column-4 field" type="text"  id="colD" name="colD" value="">
+
+        </div>
         <input type="submit" value="attack">
     </form>
         <div id="jump_header">
@@ -363,7 +364,6 @@
                     } else {
                     <td class="char-pic">
                         <div class="hidden">
-
                     </div>
                     </td>
                     }
