@@ -19,10 +19,10 @@
         } else {
             <h2 class="color-red">@controller.playerListBuffer(controller.currentPlayerIndex) it's your turn</h2>
         }
-            @if(controller.gameStatus.toString.equals("NEW")) {
+            @if(controller.gameStatus.toString.equals("WON")) {
                 <h2>@controller.playerListBuffer(controller.currentPlayerIndex) you won the game</h2>
                 <form action=/>
-                <button>New Game</button>
+                <button class="a_button">New Game</button>
                 </form>
                 <br>
             }

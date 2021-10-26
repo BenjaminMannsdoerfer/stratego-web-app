@@ -46,17 +46,51 @@
 }
 
 /* Add a black background color to the top navigation */
+.topnav-start {
+    background-color: rgba(192,141,43,255);
+    overflow: hidden;
+    padding-left: 46.1%;
+    font-family: arial;
+}
+
+
 .topnav-game {
     background-color: rgba(192,141,43,255);
     overflow: hidden;
     padding-left: 37%;
+    font-family: arial;
 }
 
 .topnav-init {
     background-color: rgba(192,141,43,255);
     overflow: hidden;
     padding-left: 42%;
+    font-family: arial;
 }
+
+/* Style the links inside the navigation bar */
+.topnav-start a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Change the color of links on hover */
+.topnav-start a:hover {
+    background-color: rgba(20,98,206,255);;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav-start a.active {
+    background-color: #04AA6D;
+    color: gold;
+}
+
 
 /* Style the links inside the navigation bar */
 .topnav-game a {
@@ -127,6 +161,7 @@
 
 .label-set {
     font-weight: bold;
+    font-family: arial;
 }
 
 #row {
@@ -135,6 +170,10 @@
 
 #col {
     margin-left: 60px;
+}
+
+#charac {
+    margin-left: 15px;
 }
 
 #rowA {
@@ -164,7 +203,7 @@
 }
 
 #img-left-game {
-    margin-left: -478px;
+    margin-left: -488px;
 }
 
 .column-2 right {
@@ -301,6 +340,7 @@ h2{
 
 .player-text {
     font-weight: bold;
+    font-family: arial;
 }
 
 #player-blue {
