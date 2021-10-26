@@ -307,6 +307,49 @@
     right:1000px;
 }
 /* about page*/
+
+.gameplay {
+    width: 20%;
+    position: relative;
+    float: left;
+    margin-left: 150px;
+}
+
+.figures {
+    width: 30%;
+    display: inline-block;
+}
+
+.rules {
+    width: 20%;
+    position: relative;
+    float: right;
+    margin-right: 150px;
+}
+
+.fig-txt {
+    width: 50%;
+    position: relative;
+    float: left;
+}
+
+.fig-sym {
+    width: 50%;
+    position: relative;
+    float: right;
+}
+
+
+#about-playfield {
+    width: 669px;
+    height: 500px;
+    margin-bottom: 50px;
+}
+
+#screenshot {
+    margin-top: 50px;
+}
+
 #body_about{
     background-color:#fcf5da;
 }
@@ -327,7 +370,9 @@ p{
 }
 .char{
     font-family:arial;
+    list-style-type: none;
 }
+
 
 /* set player pages*/
 
