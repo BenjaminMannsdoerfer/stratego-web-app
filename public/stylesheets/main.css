@@ -1,3 +1,43 @@
+/* Bootstrap */
+
+.nav-start {
+    background-color: rgba(192,141,43,255);
+    display: flex;
+    list-style: none;
+}
+
+/* Style the links inside the navigation bar */
+.nav-start a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Change the color of links on hover */
+.nav-start a:hover {
+    background-color: rgba(20,98,206,255);;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.nav-start a.active {
+    background-color: #04AA6D;
+    color: gold;
+}
+
+.subtitl {
+    font-family: arial;
+    padding-top: 2.5%;
+}
+
+
+
+/* ohne Bootstrap rein CSS */
+
 .center {
     text-align: center;
     background-color: #fcf5da;
