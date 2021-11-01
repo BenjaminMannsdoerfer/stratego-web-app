@@ -1,7 +1,89 @@
 @()
 
 @main("Stratego") {
-<div class="center-selection">
+    <head>
+        <!-- Bootstrap -->
+        @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>*@
+    </head>
+    <body class="test">
+        <div class="row text-center test h-100 ">
+            <div class="col-12 test rounded mx-auto d-block ">
+                <a href="/">
+                    <img class="img rounded mx-auto d-block" src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
+                </a>
+            </div>
+
+            <ul class="nav-start justify-content-center">
+                <li class="nav-item">
+                    <a href="/" target="_blank">New Game</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" target="_blank">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/load">Load</a>
+                </li>
+            </ul>
+
+            <div class="subtitl">
+                <h2>Please enter your Names</h2>
+            </div>
+
+            <div class="w-50 p-3 center_div">
+
+                <form action="/setPlayer">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" id="player1" name="player1" class="form-control" placeholder="Player 1">
+                        </div>
+                        <div class="col">
+                            <input type="text" id="player2" name="player2" class="form-control" placeholder="Player 2">
+                        </div>
+                    </div>
+                    <!--a href="" type="submit"  role="input" data-toggle="tooltip" data-placement="bottom" title="Start Game">Play</a-->
+                    <input type="submit" id="init-btn" class="btn btn-dark btn-lg btn-primary-spacing" data-toggle="tooltip" data-placement="bottom" title="Start Game" value="Play">
+                </form>
+
+            </div>
+        </div>
+    </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="center-selection">
         <div id = "animated-example" class = "animated fadeOut">
             <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
         </div>
@@ -25,5 +107,5 @@
                 <input type="submit" id="init-btn" class="a_button" value="Play">
             </div>
         </form>
-</div>
+</div>*@
 }

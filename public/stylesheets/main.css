@@ -19,6 +19,10 @@
 .mt-0 {
   padding-top: 50px !important;
 }
+.center_div{
+    margin: 0 auto;
+    width:80% /* value of your choice which suits your alignment */
+}
 
 
 
@@ -56,6 +60,12 @@
     font-family: arial;
     padding-top: 2.5%;
 }
+
+
+
+
+
+
 
 
 
