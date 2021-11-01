@@ -1,4 +1,27 @@
 /* Bootstrap */
+/* soni */
+.img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  background-color: #fcf5da;
+}
+.test{
+    background-color: #fcf5da;
+    margin: -8px;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.btn-primary-spacing{
+    margin-top:1%;
+}
+.mt-0 {
+  padding-top: 50px !important;
+}
+
+
+
 
 .nav-start {
     background-color: rgba(192,141,43,255);
