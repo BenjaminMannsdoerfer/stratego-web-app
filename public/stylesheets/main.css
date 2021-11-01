@@ -1,5 +1,12 @@
 /* Bootstrap */
 
+/* every page */
+.row {
+    background-color: #fcf5da;
+}
+
+/* start page */
+
 .nav-start {
     background-color: rgba(192,141,43,255);
     display: flex;
@@ -19,7 +26,7 @@
 
 /* Change the color of links on hover */
 .nav-start a:hover {
-    background-color: rgba(20,98,206,255);;
+    background-color: rgba(20,98,206,255);
     color: black;
 }
 
@@ -32,6 +39,47 @@
 .subtitl {
     font-family: arial;
     padding-top: 2.5%;
+}
+
+
+/* initGame */
+
+.color-blue {
+    color: rgba(20,98,206,255);
+}
+
+.color-red {
+    color: rgba(223,45,30,255);
+}
+
+.init-game-top {
+    width: auto;
+    margin: 0 auto;
+}
+
+.init-game-left {
+    padding: 0 !important;
+}
+
+.init-game-right {
+    padding: 0 !important;
+}
+
+
+
+.matchfield {
+    background-image: url(../images/media/matchfield.png);
+width: auto;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+}
+
+.match {
+    background-size: cover;
+    background-position: center;
+width: auto;
+    display: inline-block;
 }
 
 
@@ -52,13 +100,14 @@
     height: 955px;
 }
 
+/*
 .color-blue {
     color: rgba(20,98,206,255);
 }
 
 .color-red {
     color: rgba(223,45,30,255);
-}
+}*/
 
 .blue {
     margin: auto;
@@ -75,8 +124,8 @@
 }
 
 .char-pic {
-    height: 75px;
-    width: 75px;
+    height: 80px;
+    width: 80px;
 }
 
 .hidden {
