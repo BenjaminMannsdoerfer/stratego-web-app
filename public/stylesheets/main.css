@@ -1,8 +1,17 @@
 /* Bootstrap */
 
 /* every page */
+
+.backgroundd {
+    background-color: #fcf5da;
+}
+
 .row {
     background-color: #fcf5da;
+}
+
+.margin-center {
+    margin: auto;
 }
 
 /* start page */
@@ -52,35 +61,198 @@
     color: rgba(223,45,30,255);
 }
 
-.init-game-top {
-    width: auto;
-    margin: 0 auto;
+@media screen and (min-width: 875px) {
+    .char-pic {
+        height: 80px;
+        width: 80px;
+    }
+
+    .fig-cards {
+        width: 25px;
+        height: 50px;
+    }
+
+    .hidden {
+        margin: auto;
+        height: 50px;
+        width: 25px;
+    }
+
+    .init-game-top {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .init-game-left {
+        padding: 0 !important;
+    }
+
+    .init-game-mid {
+        padding: 0 !important;
+    }
+
+    .init-game-right {
+        padding: 0 !important;
+    }
+
+    .init-game-bot {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .matchfield {
+        background-image: url(../images/media/matchfield.png);
+    }
+
+    .blue {
+        margin: auto;
+        background-color: rgba(20, 98,206,255);
+        height: 50px;
+        width: 25px;
+    }
+
+    .blue-no-select {
+        margin: auto;
+        background-color: rgba(20, 98,206,255);
+        height: 50px;
+        width: 25px;
+        margin-top: 27px;
+    }
+
+    .red {
+        margin: auto;
+        background-color: rgba(223,45,30,255);
+        height: 50px;
+        width: 25px;
+    }
+
+    .red-no-select {
+        margin: auto;
+        background-color: rgba(223,45,30,255);
+        height: 50px;
+        width: 25px;
+        margin-top: 27px;
+    }
 }
 
-.init-game-left {
-    padding: 0 !important;
+@media screen and (min-width: 437px) and (max-width: 874px) {
+    .char-pic {
+        height: 40px;
+        width: 40px;
+    }
+
+    .hidden {
+        margin: auto;
+        height: 25px;
+        width: 12px;
+    }
+
+    .fig-cards {
+        width: 12px;
+        height: 25px;
+    }
+
+    .init-game-top {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .img-game-top {
+        width: 438px;
+        height: 27px;
+    }
+
+    .init-game-left {
+        padding: 0 !important;
+        width: 19px;
+        height: 400px;
+    }
+
+    .img-game-left {
+        width: 19px;
+        height: 400px;
+    }
+
+    .init-game-mid {
+        padding: 0 !important;
+        height: 400px;
+    }
+
+    .init-game-right {
+        padding: 0 !important;
+        width: 19px;
+        height: 400px;
+    }
+
+    .img-game-right {
+        width: 19px;
+        height: 400px;
+    }
+
+    .init-game-bot {
+        width: auto;
+        margin: 0 auto;
+    }
+
+    .img-game-bot {
+        width: 438px;
+        height: 27px;
+    }
+
+    .matchfield {
+        background-image: url(../images/media/matchfield_400x400.png);
+        height: 400px;
+    }
+
+    .blue {
+        margin: auto;
+        background-color: rgba(20, 98,206,255);
+        height: 25px;
+        width: 12px;
+        margin-top: -18px;
+    }
+
+    .blue-no-select {
+        margin: auto;
+        background-color: rgba(20, 98,206,255);
+        height: 25px;
+        width: 12px;
+        margin-top: 8px;
+    }
+
+    .red {
+        margin: auto;
+        background-color: rgba(223,45,30,255);
+        height: 25px;
+        width: 12px;
+        margin-top: -18px;
+    }
+
+    .red-no-select {
+        margin: auto;
+        background-color: rgba(223,45,30,255);
+        height: 25px;
+        width: 12px;
+        margin-top: 8px;
+    }
+
+    .direction {
+        width: 60%;
+        height: 10px;
+    }
 }
 
-.init-game-right {
-    padding: 0 !important;
+.color-blue {
+    color: rgba(20,98,206,255);
 }
 
-
-
-.matchfield {
-    background-image: url(../images/media/matchfield.png);
-width: auto;
-    display: inline-block;
-    background-size: cover;
-    background-position: center;
+.color-red {
+    color: rgba(223,45,30,255);
 }
 
-.match {
-    background-size: cover;
-    background-position: center;
-width: auto;
-    display: inline-block;
-}
+/* game */
+
+
 
 
 
@@ -109,30 +281,22 @@ width: auto;
     color: rgba(223,45,30,255);
 }*/
 
-.blue {
-    margin: auto;
-    background-color: rgba(20, 98,206,255);
-    height: 50px;
-    width: 25px;
-}
 
-.red {
-    margin: auto;
-    background-color: rgba(223,45,30,255);
-    height: 50px;
-    width: 25px;
-}
 
+/*
 .char-pic {
     height: 80px;
     width: 80px;
 }
+*/
 
+/*
 .hidden {
     margin: auto;
     height: 50px;
     width: 25px;
 }
+*/
 
 /* Add a black background color to the top navigation */
 .topnav-start {
@@ -253,6 +417,7 @@ width: auto;
     font-family: arial;
 }
 
+/*
 #row {
     margin-left: 50px;
 }
@@ -265,6 +430,8 @@ width: auto;
     margin-left: 15px;
 }
 
+*/
+/*
 #rowA {
     margin-left: 23px;
 }
@@ -280,7 +447,7 @@ width: auto;
 #colD {
     margin-left: 24px;
 }
-
+*/
 .column-2 left {
     width: 20%;
     position: relative;
