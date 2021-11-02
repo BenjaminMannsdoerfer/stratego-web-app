@@ -8,7 +8,14 @@
 }
 
 .backgroundd{
-background-color: #fcf5da;
+    background-color: #fcf5da;
+}
+.spielfeld_img{
+padding-top:100px;
+}
+table td{
+    text-align:center;
+    vertical-align:middle;
 }
 
 .test{
@@ -39,9 +46,24 @@ background-color: #fcf5da;
 
 @media screen and (max-width: 600px) {
     .forms{
-      padding-top:150px;
+      padding-top:72px;
     }
 }
+@media screen and (max-width: 669px) {
+    .about-playfield{
+        height:300px;
+        width:401px;
+    }
+}
+
+.about-padding{
+    padding-top:100px;
+}
+table,th{
+    padding-left:200px;
+}
+
+
 
 
 
@@ -410,6 +432,7 @@ background-color: #fcf5da;
 .figures {
     width: 30%;
     display: inline-block;
+    padding-left:200px;
 }
 
 .rules {
@@ -432,7 +455,7 @@ background-color: #fcf5da;
 }
 
 
-#about-playfield {
+.about-playfield {
     width: 669px;
     height: 500px;
     margin-bottom: 50px;
