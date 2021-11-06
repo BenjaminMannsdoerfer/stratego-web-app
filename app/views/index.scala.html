@@ -3,14 +3,10 @@
 @main("Stratego") {
     <head>
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     </head>
     <body class="backgroundd">
-        <div class="row text-center test h-100 ">
+        <div class="row text-center">
             <div class="col-12 test rounded mx-auto d-block ">
                 <a href="/">
                     <img class="img rounded mx-auto d-block" src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
@@ -24,10 +20,10 @@
                     <a href="/load">Load</a>
                 </li>
             </ul>
-            <div class="subtitl">
+            <div class="subtitl mt-0">
                 <h2>Please select the field size</h2>
             </div>
-            <div class ="forms">
+            <div class ="mt-0">
                 <form action=/small>
                     <a href="/small" class="btn btn-dark btn-lg btn-primary-spacing" role="button" data-toggle="tooltip" data-placement="bottom" title="4x4">small</a>
                 </form>
@@ -45,35 +41,4 @@
             </div>
         </div>
     </body>
-
-<!-- html and css only -->
-
-
-
-    @*<div class="center-selection">
-        <img src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
-        <ul class="topnav-start">
-            <a href="/about" target="_blank">About</a>
-            <a href="/load">Load</a>
-        </ul>
-        <div class = subtitle>
-            <h2>Please select the field size</h2>
-        </div>
-        <div class="container">
-            <form action=/small>
-                <button class="a_button" id="btn1"> small </button>
-            </form>
-            <form action=/medium id="form-btn">
-                <button class="a_button" id="btn2"> medium </button>
-            </form>
-            <form action=/large>
-                <button class="a_button" id="btn3"> large </button>
-            </form>
-        </div>
-        <div class="about">
-                <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
-                    <img src="@routes.Assets.versioned("images/media/github.png")"width="80" height="80"/>
-                </a>
-        </div>
-    </div>*@
 }
