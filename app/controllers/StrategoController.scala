@@ -64,6 +64,8 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
   }
 
   def loadGame = Action {
+    gameController.createNewMatchfieldSize(gameController.getSize)
+    gameController.setPlayers("PlayerBlue PlayerRed")
     gameController.load
     Ok(views.html.playGame(gameController))
   }
