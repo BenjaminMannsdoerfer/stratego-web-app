@@ -54,6 +54,10 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
     Ok(views.html.playGame(gameController))
   }
 
+  def set = Action {
+    Ok(views.html.initGame(gameController))
+  }
+
   def stratego = Action {
     Ok(views.html.playGame(gameController))
   }
