@@ -100,18 +100,22 @@ function gameKeyCode(event) {
                 break;
             case 68:
             case 100:
+            case 40:
                 dir = 'd'; // d
                 break;
             case 85:
             case 117:
+            case 38:
                 dir = 'u'; // u
                 break;
             case 76:
             case 108:
+            case 37:
                 dir = 'l'; // l
                 break;
             case 82:
             case 114:
+            case 39:
                 dir = 'r'; // r
                 break;
             default:
@@ -127,10 +131,16 @@ function gameKeyCode(event) {
 
 }
 
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
 
 function setfigures() {
-    var newLine = "\r\n"
-    var msg = "How to set figures?"
+    let newLine = "\r\n"
+    let msg = "How to set figures?"
     msg += newLine;
     msg += "1. You press on an empty field";
     msg += newLine;
@@ -148,13 +158,13 @@ function setfigures() {
 }
 
 function moveattack() {
-    var newLine = "\r\n"
-    var msg = "How to move figures?"
+    let newLine = "\r\n"
+    let msg = "How to move figures?"
     msg += newLine;
     msg += newLine;
     msg += "1. Press on a figure";
     msg += newLine;
-    msg += "2. Press d for moving down, u for moving up, l for moving left, r for moving right";
+    msg += "2. Press \"d\" for moving down, \"u\" for moving up, \"l\" for moving left, \"r\" for moving right or the associated arrow keys";
     msg+= newLine;
     msg += "Only possible when the desired field is not blocked by a other figures or sea";
     msg+= newLine;
@@ -165,7 +175,7 @@ function moveattack() {
     msg += newLine;
     msg += "1. Press the figures";
     msg+= newLine;
-    msg += "2. Press a for attack";
+    msg += "2. Press \"a\" for attack";
     msg+= newLine;
     msg += "3. Press the desired figure to attack";
     msg+= newLine;
