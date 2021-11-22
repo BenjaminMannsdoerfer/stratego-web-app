@@ -1,6 +1,3 @@
-window.addEventListener("keydown", characKeyCode, false)
-window.addEventListener("keydown", gameKeyCode, false)
-
 let row;
 let col;
 let row_enemy;
@@ -8,36 +5,30 @@ let col_enemy;
 let charac;
 let dir;
 let attack = false;
+let matchField = new MatchField();
 
-const field = document.getElementsByClassName("field");
-Object.keys(field).forEach(key => {
-    field[key].addEventListener("click", function () {
+$(document).on('click', '.field', (function () {
+    row = this.parentElement.rowIndex;
+    col = this.cellIndex;
+}))
+
+$(document).on('click', '.field-game', (function () {
+    if (attack === false) {
         row = this.parentElement.rowIndex;
         col = this.cellIndex;
-    });
-});
-
-const field_game = document.getElementsByClassName("field-game");
-Object.keys(field_game).forEach(key => {
-    field_game[key].addEventListener("click", function () {
-        if (attack === false) {
-            row = this.parentElement.rowIndex;
-            col = this.cellIndex;
+    } else {
+        if (row === undefined || col === undefined) {
         } else {
-            if (row === undefined || col === undefined) {
-                window.location = "/stratego#jump_header";
-            } else {
-                row_enemy = this.parentElement.rowIndex;
-                col_enemy = this.cellIndex;
-                window.location = "/attack/" + row + "/" + col + "/" + row_enemy + "/" + col_enemy + "#jump_header"
-                attack = false
-            }
+            row_enemy = this.parentElement.rowIndex;
+            col_enemy = this.cellIndex;
+            matchField.attack(row, col, row_enemy, col_enemy)
+            attack = false
         }
-    });
-})
+    }
+}));
 
 
-function characKeyCode(event) {
+$(document).keydown(function (event) {
     if (window.location.href.indexOf("set") > -1) {
         switch (event.keyCode) {
             case 70:
@@ -81,51 +72,56 @@ function characKeyCode(event) {
                 break;
         }
         if (charac === undefined || row === undefined || col === undefined) {
-            window.location = "/set#jump_head";
         } else {
-            window.location = "/setCharacter/" + row + "/" + col + "/" + charac + "#jump_head"
+            matchField.set(row, col, charac);
+            charac = "";
         }
     }
+});
 
-}
-
-function gameKeyCode(event) {
+$(document).keydown(function (event) {
     if (window.location.href.indexOf("move") > -1 || window.location.href.indexOf("init") > -1 || window.location.href.indexOf("stratego") > -1
     || window.location.href.indexOf("save") > -1 || window.location.href.indexOf("load") > -1 || window.location.href.indexOf("undo") > -1
     || window.location.href.indexOf("redo") > -1 || window.location.href.indexOf("attack") > -1) {
         switch (event.keyCode) {
-            case 65:
-            case 87:
-                attack = true;
-                break;
-            case 68:
-            case 100:
-                dir = 'd'; // d
-                break;
-            case 85:
-            case 117:
-                dir = 'u'; // u
-                break;
-            case 76:
-            case 108:
-                dir = 'l'; // l
-                break;
-            case 82:
-            case 114:
-                dir = 'r'; // r
-                break;
-            default:
-                window.location = "/stratego#jump_header";
+        case 65:
+        case 87:
+            attack = true;
+            break;
+        case 68:
+        case 100:
+        case 40:
+            dir = 'd'; // d
+            break;
+        case 85:
+        case 117:
+        case 38:
+            dir = 'u'; // u
+            break;
+        case 76:
+        case 108:
+        case 37:
+            dir = 'l'; // l
+            break;
+        case 82:
+        case 114:
+        case 39:
+            dir = 'r'; // r
+            break;
         }
         if (dir === undefined) {
-        } else if (dir.length > 1 || row === undefined || col === undefined) {
-            window.location = "/stratego#jump_header";
+        } else if (dir.length > 1 || row === undefined || col === undefined || attack === true) {
         } else {
-            window.location = "/move/" + dir + "/" + row + "/" + col + "#jump_header"
+            matchField.move(dir, row, col);
         }
     }
+});
 
-}
+$(document).keydown(function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+});
 
 
 function setfigures() {

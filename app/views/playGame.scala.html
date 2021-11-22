@@ -29,25 +29,17 @@
                     <a href="javascript:moveattack()">Move + Attack</a>
                 </li>
             </ul>
-            <div id="jump_header">
-                @if(controller.gameStatus.toString.equals("WON")) {
-                    @if(controller.currentPlayerIndex == 0) {
-                        <h2 class="color-blue">@controller.playerListBuffer(controller.currentPlayerIndex) you won the game</h2>
-                    } else {
-                        <h2 class="color-red">@controller.playerListBuffer(controller.currentPlayerIndex) you won the game</h2>
-                    }
-                    <form action=/>
-                    <button class="btn btn-dark btn-lg btn-primary-spacing">New Game</button>
-                    </form>
-                    <br>
-                } else {
-                    @if(controller.currentPlayerIndex == 0) {
-                        <h2 class="color-blue">@controller.playerListBuffer(controller.currentPlayerIndex) it's your turn</h2>
-                    } else {
-                        <h2 class="color-red">@controller.playerListBuffer(controller.currentPlayerIndex) it's your turn</h2>
-                    }
-                }
+            <div id="won-header">
+                <h2 id="game-won"></h2>
+                <form action="/" id="won-btn">
+
+                </form>
             </div>
+
+            <div id="jump_header">
+                <h2 class="color-blue" id="game-header"></h2>
+            </div>
+
             <div class="init-game-top">
                 <img class="img-fluid img-game-top" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_top.jpg")"/>
             </div>
@@ -56,170 +48,8 @@
                     <div class="col-auto init-game-left">
                         <img class="img-game-left" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
                     </div>
-                    <div class="col-auto init-game-mid">
-                        <table class="matchfield">
-                        @for(row <- 0 until controller.getSize) {
-                            <tr>
-                            @for(col <- 0 until controller.getSize) {
-                                @if(controller.getField.field(row, col).isSet) {
-                                    @if(controller.getField.field(row, col).colour.get.value == 0 && controller.currentPlayerIndex == 0) {
-                                        <td class="char-pic field-game">
-                                        @controller.getField.field(row, col).character.get.figure.name match {
-                                            case "B" => {
-                                                <div class="blue">
-                                                    <img class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" />
-                                                </div>
-                                            }
-                                            case "M" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "9" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "8" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "7" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "6" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "5" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "4" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "3" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "2" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "1" => {
-                                                    <div class="blue">
-                                                        <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" />
-                                                    </div>
-                                            }
-                                            case "F" => {
-                                                <div class="blue">
-                                                    <img class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" />
-                                                </div>
-                                            }
-                                        }
-                                        </td>
-                                    } else if(controller.getField.field(row,col).colour.get.value == 1 && controller.currentPlayerIndex == 1) {
-                                    <td class="char-pic field-game">
-                                    @controller.getField.field(row, col).character.get.figure.name match {
-                                        case "B" => {
-                                            <div class="red">
-                                                <img class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" />
-                                            </div>
-                                        }
-                                        case "M" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "9" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "8" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "7" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "6" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "5" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "4" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "3" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "2" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "1" => {
-                                                <div class="red">
-                                                    <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" />
-                                                </div>
-                                        }
-                                        case "F" => {
-                                            <div class="red">
-                                                <img class="fig-cards" src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" />
-                                            </div>
-                                        }
-                                    }
-                                    </td>
-                                    } else if(controller.getField.field(row,col).colour.get.value == 1 && controller.currentPlayerIndex == 0) {
-                                    <td class="char-pic field-game">
-                                        <div class="hidden">
-                                            <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/colors/stratego-red.png")" alt="player" />
-                                        </div>
-                                    </td>
-                                    } else if(controller.getField.field(row,col).colour.get.value == 0 && controller.currentPlayerIndex == 1) {
-                                    <td class="char-pic field-game">
-                                        <div class="hidden">
-                                            <input type="image" class="fig-cards" src="@routes.Assets.versioned("images/media/colors/stratego-blue.png")" alt="player" />
-                                        </div>
-                                    </td>
-                                    }
-                                } else if (controller.getField.isWater(row, col)){
-                                <td class="char-pic">
-                                    <div class="hidden">
-                                    </div>
-                                </td>
-                                } else {
-                                <td class="char-pic">
-                                    <div class="hidden">
-                                </div>
-                                </td>
-                                }
-                            }
-                            </tr>
-                        }
-                        </table>
+                    <div class="col-auto init-game-mid" id="board">
+
                     </div>
                     <div class="col-auto init-game-right">
                         <img class="img-game-right" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_right.jpg")"/>

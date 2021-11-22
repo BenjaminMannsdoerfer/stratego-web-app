@@ -4,6 +4,7 @@ import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
+import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
@@ -27,7 +28,8 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
     else
       gameController.setPlayers(player1 + " " + player2)
-    Ok(views.html.initGame(gameController))
+      //Ok(views.html.initGame(gameController))
+      Ok(views.html.initGame(gameController))
   }
 
   def init: Action[AnyContent] = Action {
@@ -40,6 +42,7 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
     if(gameController.playerListBuffer(1).characterList.size==0) {
       Ok(views.html.playGame(gameController))
     } else {
+      //Ok(views.html.initGame(gameController))
       Ok(views.html.initGame(gameController))
     }
   }
@@ -55,6 +58,7 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
   }
 
   def set = Action {
+    //Ok(views.html.initGame(gameController))
     Ok(views.html.initGame(gameController))
   }
 
@@ -97,5 +101,78 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
   def largeGame = Action {
     gameController.createNewMatchfieldSize(10)
     Ok(views.html.setNames())
+  }
+
+  def setFigures: Action[JsValue] = Action(parse.json) {
+    setRequest: Request[JsValue] => {
+      val charac = (setRequest.body \ "charac").as[String]
+      val row = (setRequest.body \ "row").as[Int]
+      val col = (setRequest.body \ "col").as[Int]
+      gameController.set(row, col, charac)
+      Ok(jsonObj)
+    }
+  }
+
+  def moveFigures: Action[JsValue] = Action(parse.json) {
+    moveRequest: Request[JsValue] => {
+      val dir = (moveRequest.body \ "dir").as[String].toCharArray
+      val row = (moveRequest.body \ "row").as[Int]
+      val col = (moveRequest.body \ "col").as[Int]
+      gameController.move(dir(0), row, col)
+      Ok(jsonObj)
+    }
+  }
+
+  def attackFigures: Action[JsValue] = Action(parse.json) {
+    attackRequest: Request[JsValue] => {
+      val row = (attackRequest.body \ "row").as[Int]
+      val col = (attackRequest.body \ "col").as[Int]
+      val rowD  = (attackRequest.body \ "rowD").as[Int]
+      val colD = (attackRequest.body \ "colD").as[Int]
+      println(row + " " + col + " " + rowD + " " + colD)
+      gameController.attack(row, col, rowD, colD)
+      Ok(jsonObj)
+    }
+  }
+
+  def gameToJson: Action[AnyContent] = Action {
+    Ok(jsonObj)
+  }
+
+  def jsonObj: JsObject =  {
+    Json.obj(
+      "gameStatus" -> (gameController.gameStatus),
+      "machtfieldSize" -> JsNumber(gameController.getSize),
+      "playerListBufferBlue" -> (gameController.playerListBuffer(0).characterList.size),
+      "playerListBufferRed" -> (gameController.playerListBuffer(1).characterList.size),
+      "currentPlayerIndex" -> JsNumber(gameController.currentPlayerIndex),
+      "currentPlayer" -> (gameController.playerList(gameController.currentPlayerIndex)).toString(),
+      "players" -> (gameController.playerList.head + " "+ gameController.playerList(1)),
+      "matchField"-> Json.toJson(
+        for{
+          row <- 0 until gameController.getField.matrixSize
+          col <- 0 until gameController.getField.matrixSize
+        } yield {
+          var obj = Json.obj(
+            "row" -> row,
+            "col" -> col
+          )
+          if (gameController.getField.isWater(row,col)) {
+            obj = obj.++(Json.obj(
+              "water" -> "~"))
+          }
+          if(gameController.getField.field(row,col).isSet) {
+            obj = obj.++(Json.obj(
+              "figName" -> gameController.getField.field(row, col).character.get.figure.name,
+              "figValue" -> gameController.getField.field(row, col).character.get.figure.value,
+              "colour" -> gameController.getField.field(row, col).colour.get.value,
+              "isSet" -> gameController.getField.field(row, col).isSet
+            )
+            )
+          }
+          obj
+        }
+      )
+    )
   }
 }
