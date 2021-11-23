@@ -5,6 +5,7 @@ class MatchField {
     constructor() {
         this.fields = []
         this.currentPlayerIndex = 0
+        this.currentPlayer = "";
         this.playerListBufferBlue = 40;
         this.playerListBufferRed = 40;
         this.gameStatus = "";
@@ -388,26 +389,27 @@ class MatchField {
 
     updateCurrentPlayer(currentPlayer, currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex
+        this.currentPlayer = currentPlayer
         if (currentPlayerIndex === 0) {
             $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-blue")
         } else {
             $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-red")
         }
         if (currentPlayerIndex === 0) {
-            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-blue")
+            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-blue").removeClass("color-red")
         } else {
-            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-red")
+            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-red").removeClass("color-blue")
         }
         if (this.gameStatus === "WON") {
             $("#game-header").html("")
-            $("#game-won").html(currentPlayer + " you found the flag and won the game!")
             if (currentPlayerIndex === 0) {
-                $("#game-won").addClass("color-blue")
+                $("#game-won").html(currentPlayer + " you found the flag and won the game!").addClass("color-blue")
             } else {
-                $("#game-won").addClass("color-red")
+                $("#game-won").html(currentPlayer + " you found the flag and won the game!").addClass("color-red")
             }
             $("#won-btn").html('<button class="btn btn-dark btn-lg btn-primary-spacing">New Game</button>')
         }
+
     }
 }
 

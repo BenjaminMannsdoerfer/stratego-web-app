@@ -28,7 +28,6 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
     else
       gameController.setPlayers(player1 + " " + player2)
-      //Ok(views.html.initGame(gameController))
       Ok(views.html.initGame(gameController))
   }
 
@@ -42,7 +41,6 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
     if(gameController.playerListBuffer(1).characterList.size==0) {
       Ok(views.html.playGame(gameController))
     } else {
-      //Ok(views.html.initGame(gameController))
       Ok(views.html.initGame(gameController))
     }
   }
@@ -58,7 +56,6 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
   }
 
   def set = Action {
-    //Ok(views.html.initGame(gameController))
     Ok(views.html.initGame(gameController))
   }
 
@@ -146,7 +143,7 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       "playerListBufferBlue" -> (gameController.playerListBuffer(0).characterList.size),
       "playerListBufferRed" -> (gameController.playerListBuffer(1).characterList.size),
       "currentPlayerIndex" -> JsNumber(gameController.currentPlayerIndex),
-      "currentPlayer" -> (gameController.playerList(gameController.currentPlayerIndex)).toString(),
+      "currentPlayer" -> (gameController.playerListBuffer(gameController.currentPlayerIndex)).toString(),
       "players" -> (gameController.playerList.head + " "+ gameController.playerList(1)),
       "matchField"-> Json.toJson(
         for{

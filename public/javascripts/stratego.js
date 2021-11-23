@@ -21,8 +21,10 @@ $(document).on('click', '.field-game', (function () {
         } else {
             row_enemy = this.parentElement.rowIndex;
             col_enemy = this.cellIndex;
-            matchField.attack(row, col, row_enemy, col_enemy)
-            attack = false
+            if (matchField.gameStatus !== "WON") {
+                matchField.attack(row, col, row_enemy, col_enemy)
+                attack = false
+            }
         }
     }
 }));
@@ -77,7 +79,7 @@ $(document).keydown(function (event) {
             charac = "";
         }
     }
-});
+})
 
 $(document).keydown(function (event) {
     if (window.location.href.indexOf("move") > -1 || window.location.href.indexOf("init") > -1 || window.location.href.indexOf("stratego") > -1
@@ -112,10 +114,13 @@ $(document).keydown(function (event) {
         if (dir === undefined) {
         } else if (dir.length > 1 || row === undefined || col === undefined || attack === true) {
         } else {
-            matchField.move(dir, row, col);
+            if (matchField.gameStatus !== "WON") {
+                matchField.move(dir, row, col);
+            }
+
         }
     }
-});
+})
 
 $(document).keydown(function(e) {
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
