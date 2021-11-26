@@ -396,9 +396,9 @@ class MatchField {
             $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-red")
         }
         if (currentPlayerIndex === 0) {
-            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-blue").removeClass("color-red")
+            $("#game-header").html(currentPlayer + " it's your turn").addClass("color-blue").removeClass("color-red")
         } else {
-            $("#game-header").html(currentPlayer + " it's your turn" ).addClass("color-red").removeClass("color-blue")
+            $("#game-header").html(currentPlayer + " it's your turn").addClass("color-red").removeClass("color-blue")
         }
         if (this.gameStatus === "WON") {
             $("#game-header").html("")
@@ -423,14 +423,40 @@ function loadJson() {
             matchField = new MatchField();
             size = result.machtfieldSize;
             matchField.updateMatchField(result.matchField, result.playerListBufferBlue, result.playerListBufferRed,
-            result.gameStatus);
+                result.gameStatus);
             matchField.updateView();
             matchField.updateCurrentPlayer(result.currentPlayer, result.currentPlayerIndex)
         }
     });
 }
 
+function connectWebSocket() {
+    let websocket = new WebSocket("ws://localhost:9000/websocket")
+    websocket.setTimeout
+
+    websocket.onopen = function(event) {
+        console.log("Connected to Websocket");
+    }
+
+    websocket.onclose = function () {
+        console.log('Connection with Websocket Closed!');
+    };
+
+    websocket.onerror = function (error) {
+        console.log('Error in Websocket Occured: ' + error);
+    };
+
+    websocket.onmessage = function (e) {
+        if (typeof e.data === "string") {
+            let json = JSON.parse(e.data);
+            console.log("json loaded")
+            loadJson()
+        }
+
+    };
+}
+
 $(document).ready(function () {
     loadJson();
+    connectWebSocket()
 });
-
