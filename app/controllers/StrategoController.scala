@@ -1,13 +1,24 @@
 package controllers
 
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+
 import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerSwitch}
 import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
+import play.api.libs.streams.ActorFlow
+import akka.stream.Materializer
+import scala.swing.Reactor
+
+
+
+
+
+
 
 @Singleton
-class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class StrategoController @Inject()(cc: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
@@ -171,5 +182,35 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
         }
       )
     )
+  }
+
+
+  def socket: WebSocket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      StrategoWebSocketActorFactory.create(out)
+    }
+  }
+  object StrategoWebSocketActorFactory{
+    def create(out: ActorRef): Props = {
+      Props(new StrategoWebSocketActor(out))
+    }
+  }
+  class StrategoWebSocketActor(out: ActorRef) extends Actor with Reactor{
+    listenTo(gameController)
+
+    def receive: Receive = {
+      case msg: String =>
+        out ! gameToJson().toString()
+        println("Sent Json to client" + msg)
+    }
+
+    reactions+= {
+      case event: FieldChanged => sendJsonToClient
+      case event: PlayerSwitch => sendJsonToClient
+    }
+    def sendJsonToClient = {
+      out ! gameToJson.toString()
+    }
   }
 }
