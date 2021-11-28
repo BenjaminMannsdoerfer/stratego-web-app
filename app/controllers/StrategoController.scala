@@ -5,7 +5,7 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, PlayerSwitch}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, PlayerSwitch, MachtfieldInitialized, PlayerChanged}
 import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
 import play.api.libs.streams.ActorFlow
 import akka.stream.Materializer
@@ -113,7 +113,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       val row = (setRequest.body \ "row").as[Int]
       val col = (setRequest.body \ "col").as[Int]
       gameController.set(row, col, charac)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
@@ -123,7 +123,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       val row = (moveRequest.body \ "row").as[Int]
       val col = (moveRequest.body \ "col").as[Int]
       gameController.move(dir(0), row, col)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
@@ -135,12 +135,12 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       val colD = (attackRequest.body \ "colD").as[Int]
       println(row + " " + col + " " + rowD + " " + colD)
       gameController.attack(row, col, rowD, colD)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
   def gameToJson: Action[AnyContent] = Action {
-    Ok(jsonObj)
+    Ok(jsonObj())
   }
 
   def jsonObj(): JsObject =  {
@@ -204,8 +204,10 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     reactions+= {
       case event: FieldChanged => sendJsonToClient
       case event: PlayerSwitch => sendJsonToClient
-      // case event: GameFinished => sendJsonToClient  vielleicht
+      case event: PlayerChanged => sendJsonToClient
+      case event: MachtfieldInitialized => sendJsonToClient
     }
+
     def sendJsonToClient = {
       println("Received")
       out ! jsonObj().toString()

@@ -448,10 +448,13 @@ function connectWebSocket() {
 
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
+            matchField = new MatchField();
             let json = JSON.parse(e.data);
-            let field = json.matchfield
+            console.log(json.matchField)
+            console.log(json.currentPlayerIndex + " " + json.currentPlayer + " " + json.gameStatus)
+            let field = json.matchField
             let currentPlayerIndex = json.currentPlayerIndex
-            let currentPLayer = json.currentPlayer
+            let currentPlayer = json.currentPlayer
             let gameStatus = json.gameStatus
             let playerListBufferBlue = json.playerListBufferBlue
             let playerListBufferRed = json.playerListBufferRed
@@ -460,14 +463,11 @@ function connectWebSocket() {
             matchField.updateMatchField(field, playerListBufferBlue, playerListBufferRed, gameStatus);
             matchField.updateView();
             matchField.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
-            //loadJson()
         }
-
     };
 }
 
 $(document).ready(function () {
-    console.log("testtststst")
     loadJson();
     connectWebSocket()
 });
