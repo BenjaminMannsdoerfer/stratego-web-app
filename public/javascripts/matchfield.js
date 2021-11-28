@@ -346,7 +346,6 @@ class MatchField {
                 this.updateMatchField(matchField, playerListBufferBlue, playerListBufferRed, gameStatus)
                 this.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
                 this.updateView()
-
             }
         });
     }
@@ -409,7 +408,6 @@ class MatchField {
             }
             $("#won-btn").html('<button class="btn btn-dark btn-lg btn-primary-spacing">New Game</button>')
         }
-
     }
 }
 
@@ -450,19 +448,15 @@ function connectWebSocket() {
         if (typeof e.data === "string") {
             matchField = new MatchField();
             let json = JSON.parse(e.data);
-            console.log(json.matchField)
-            console.log(json.currentPlayerIndex + " " + json.currentPlayer + " " + json.gameStatus)
             let field = json.matchField
             let currentPlayerIndex = json.currentPlayerIndex
             let currentPlayer = json.currentPlayer
             let gameStatus = json.gameStatus
             let playerListBufferBlue = json.playerListBufferBlue
             let playerListBufferRed = json.playerListBufferRed
-            console.log("json loaded")
-
             matchField.updateMatchField(field, playerListBufferBlue, playerListBufferRed, gameStatus);
-            matchField.updateView();
             matchField.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
+            matchField.updateView();
         }
     };
 }

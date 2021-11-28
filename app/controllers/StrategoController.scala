@@ -180,7 +180,6 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     )
   }
 
-
   def socket: WebSocket = WebSocket.accept[String, String] { request =>
     ActorFlow.actorRef { out =>
       println("Connect received")
