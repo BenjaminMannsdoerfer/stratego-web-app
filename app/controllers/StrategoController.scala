@@ -5,16 +5,12 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerSwitch}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, PlayerSwitch}
 import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
 import play.api.libs.streams.ActorFlow
 import akka.stream.Materializer
+
 import scala.swing.Reactor
-
-
-
-
-
 
 
 @Singleton
@@ -147,7 +143,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     Ok(jsonObj)
   }
 
-  def jsonObj: JsObject =  {
+  def jsonObj(): JsObject =  {
     Json.obj(
       "gameStatus" -> (gameController.gameStatus),
       "machtfieldSize" -> JsNumber(gameController.getSize),
@@ -201,16 +197,18 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
 
     def receive: Receive = {
       case msg: String =>
-        out ! gameToJson().toString()
+        out ! jsonObj().toString()
         println("Sent Json to client" + msg)
     }
 
     reactions+= {
       case event: FieldChanged => sendJsonToClient
       case event: PlayerSwitch => sendJsonToClient
+      // case event: GameFinished => sendJsonToClient  vielleicht
     }
     def sendJsonToClient = {
-      out ! gameToJson.toString()
+      println("Received")
+      out ! jsonObj().toString()
     }
   }
 }

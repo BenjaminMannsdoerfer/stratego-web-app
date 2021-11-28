@@ -449,14 +449,25 @@ function connectWebSocket() {
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
             let json = JSON.parse(e.data);
+            let field = json.matchfield
+            let currentPlayerIndex = json.currentPlayerIndex
+            let currentPLayer = json.currentPlayer
+            let gameStatus = json.gameStatus
+            let playerListBufferBlue = json.playerListBufferBlue
+            let playerListBufferRed = json.playerListBufferRed
             console.log("json loaded")
-            loadJson()
+
+            matchField.updateMatchField(field, playerListBufferBlue, playerListBufferRed, gameStatus);
+            matchField.updateView();
+            matchField.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
+            //loadJson()
         }
 
     };
 }
 
 $(document).ready(function () {
+    console.log("testtststst")
     loadJson();
     connectWebSocket()
 });
