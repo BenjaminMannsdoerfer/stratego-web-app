@@ -428,6 +428,5 @@ function connectWebSocket() {
 }
 
 $(document).ready(function () {
-    //loadJson();
     connectWebSocket()
 });
