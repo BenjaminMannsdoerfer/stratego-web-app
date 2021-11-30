@@ -1,13 +1,20 @@
 package controllers
 
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+
 import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, PlayerSwitch, MachtfieldInitialized, PlayerChanged}
 import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
+import play.api.libs.streams.ActorFlow
+import akka.stream.Materializer
+
+import scala.swing.Reactor
+
 
 @Singleton
-class StrategoController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class StrategoController @Inject()(cc: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
@@ -106,7 +113,7 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       val row = (setRequest.body \ "row").as[Int]
       val col = (setRequest.body \ "col").as[Int]
       gameController.set(row, col, charac)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
@@ -116,7 +123,7 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       val row = (moveRequest.body \ "row").as[Int]
       val col = (moveRequest.body \ "col").as[Int]
       gameController.move(dir(0), row, col)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
@@ -128,15 +135,15 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
       val colD = (attackRequest.body \ "colD").as[Int]
       println(row + " " + col + " " + rowD + " " + colD)
       gameController.attack(row, col, rowD, colD)
-      Ok(jsonObj)
+      Ok(jsonObj())
     }
   }
 
   def gameToJson: Action[AnyContent] = Action {
-    Ok(jsonObj)
+    Ok(jsonObj())
   }
 
-  def jsonObj: JsObject =  {
+  def jsonObj(): JsObject =  {
     Json.obj(
       "gameStatus" -> (gameController.gameStatus),
       "machtfieldSize" -> JsNumber(gameController.getSize),
@@ -171,5 +178,39 @@ class StrategoController @Inject()(cc: ControllerComponents) extends AbstractCon
         }
       )
     )
+  }
+
+  def socket: WebSocket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Connect received")
+      StrategoWebSocketActorFactory.create(out)
+    }
+  }
+  object StrategoWebSocketActorFactory{
+    def create(out: ActorRef): Props = {
+      Props(new StrategoWebSocketActor(out))
+    }
+  }
+  class StrategoWebSocketActor(out: ActorRef) extends Actor with Reactor{
+    listenTo(gameController)
+
+    def receive: Receive = {
+      case msg: String =>
+        out ! jsonObj().toString()
+        println("Sent Json to client" + msg)
+    }
+
+    reactions+= {
+      case event: FieldChanged => sendJsonToClient
+      case event: PlayerSwitch => sendJsonToClient
+      case event: PlayerChanged => sendJsonToClient
+      case event: MachtfieldInitialized => sendJsonToClient
+      case event: GameFinished => sendJsonToClient
+    }
+
+    def sendJsonToClient = {
+      println("Received")
+      out ! jsonObj().toString()
+    }
   }
 }
