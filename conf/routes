@@ -12,11 +12,13 @@ GET     /game                           controllers.StrategoController.game
 
 GET     /stratego                       controllers.StrategoController.stratego
 
+GET     /set                            controllers.StrategoController.set
+
 GET     /setPlayer                      controllers.StrategoController.setPlayer(player1: String, player2:String)
 
 GET     /setPlayer/:player1/:player2    controllers.StrategoController.setPlayer(player1: String, player2:String)
 
-GET     /init                           controllers.StrategoController.init
+GET     /init                            controllers.StrategoController.init
 
 GET     /setChar                        controllers.StrategoController.setCharacter(row: Int, col:Int, charac: Char)
 
@@ -43,6 +45,14 @@ GET     /small                          controllers.StrategoController.smallGame
 GET     /medium                         controllers.StrategoController.mediumGame
 
 GET     /large                          controllers.StrategoController.largeGame
+
+GET     /json                           controllers.StrategoController.gameToJson
+
+POST    /setFigures                     controllers.StrategoController.setFigures
+
+POST    /moveFigures                    controllers.StrategoController.moveFigures
+
+POST    /attackFigures                  controllers.StrategoController.attackFigures
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -110,14 +110,6 @@
         width: 25px;
     }
 
-    .blue-no-select {
-        margin: auto;
-        background-color: rgba(20, 98,206,255);
-        height: 50px;
-        width: 25px;
-        margin-top: 27px;
-    }
-
     .red {
         margin: auto;
         background-color: rgba(223,45,30,255);
@@ -125,13 +117,6 @@
         width: 25px;
     }
 
-    .red-no-select {
-        margin: auto;
-        background-color: rgba(223,45,30,255);
-        height: 50px;
-        width: 25px;
-        margin-top: 27px;
-    }
 }
 
 @media screen and (min-width: 437px) and (max-width: 874px) {
@@ -239,10 +224,6 @@
         width: 60%;
         height: 10px;
     }
-}
-
-.init {
-    margin-bottom: 20px;
 }
 
 .color-blue {
