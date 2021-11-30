@@ -48,6 +48,8 @@ GET     /large                          controllers.StrategoController.largeGame
 
 GET     /json                           controllers.StrategoController.gameToJson
 
+GET     /websocket                      controllers.StrategoController.socket
+
 POST    /setFigures                     controllers.StrategoController.setFigures
 
 POST    /moveFigures                    controllers.StrategoController.moveFigures
