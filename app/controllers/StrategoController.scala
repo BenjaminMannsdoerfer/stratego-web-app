@@ -205,6 +205,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       case event: PlayerSwitch => sendJsonToClient
       case event: PlayerChanged => sendJsonToClient
       case event: MachtfieldInitialized => sendJsonToClient
+      case event: GameFinished => sendJsonToClient
     }
 
     def sendJsonToClient = {
