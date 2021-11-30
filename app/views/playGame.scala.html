@@ -1,165 +1,64 @@
 @(controller: de.htwg.se.stratego.controller.controllerComponent.ControllerInterface)
 
 @main("Stratego") {
-    <center>
-    <h1>Welcome to Stratego</h1>
-        <form action=/>
-        <button>New Game</button>
-        </form>
-    <h2>play the game @controller.playerListBuffer(controller.currentPlayerIndex)</h2>
-    <form action=/moveChar>
-        <label>Direction</label>
-        <input type="text" id="dir" name="dir" value="">
-        <br>
-        <label>Row</label>
-        <input type="text"  id="row" name="row" value="">
-        <br>
-        <label>Col</label>
-        <input type="text"  id="col" name="col" value="">
-        <br>
-        <input type="submit" value="move">
-    </form>
-    <br>
-    <form action=/attackChar>
-        <label>Row of the attacker</label>
-        <input type="text" id="rowA" name="rowA" value="">
-        <br>
-        <label>Col of the attacker</label>
-        <input type="text"  id="colA" name="colA" value="">
-        <br>
-        <label>Row of the defender</label>
-        <input type="text"  id="rowD" name="rowD" value="">
-        <br>
-        <label>Col of the defender</label>
-        <input type="text"  id="colD" name="colD" value="">
-        <br>
-        <input type="submit" value="attack">
-    </form>
-    <br>
-    <div>
-        <table>
-        @for(row <- 0 until controller.getSize) {
-            <tr>
-            @for(col <- 0 until controller.getSize) {
-                @if(controller.getField.field(row, col).isSet) {
-                    @if(controller.getField.field(row, col).colour.get.value == 0 && controller.currentPlayerIndex == 0) {
-                        <td>
-                        @controller.getField.field(row, col).character.get.figure.name match {
-                            case "B" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "M" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "9" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "8" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "7" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "6" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "5" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "4" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "3" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "2" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "1" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="25" height="50"/>
-                            }
-                            case "F" => {
-                                <img src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="25" height="50"/>
-                            }
-                        }
-                        </td>
-                    } else if(controller.getField.field(row,col).colour.get.value == 1 && controller.currentPlayerIndex == 1) {
-                    <td>
-                    @controller.getField.field(row, col).character.get.figure.name match {
-                        case "B" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-bomb.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "M" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-marshal.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "9" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-general.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "8" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-colonel.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "7" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-major.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "6" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-captain.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "5" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-lieutenant.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "4" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-sergeant.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "3" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-miner.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "2" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-scout.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "1" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-spy.svg")" alt="player" width="25" height="50"/>
-                        }
-                        case "F" => {
-                            <img src="@routes.Assets.versioned("images/media/figures/stratego-flag.svg")" alt="player" width="25" height="50"/>
-                        }
-                    }
-                    </td>
-                    } else if(controller.getField.field(row,col).colour.get.value == 1 && controller.currentPlayerIndex == 0) {
-                    <td>
-                        <img src="@routes.Assets.versioned("images/media/colors/stratego-red.png")" alt="player" width="25" height="50"/>
-                    </td>
-                    } else if(controller.getField.field(row,col).colour.get.value == 0 && controller.currentPlayerIndex == 1) {
-                    <td>
-                        <img src="@routes.Assets.versioned("images/media/colors/stratego-blue.png")" alt="player" width="25" height="50"/>
-                    </td>
-                    }
-                } else if (controller.getField.isWater(row, col)){
-                <td>
-                    <img src="@routes.Assets.versioned("images/media/figures/stratego-water.png")" alt="player" width="25" height="50"/>
-                </td>
-                } else {
-                <td>
-                    <img src="@routes.Assets.versioned("images/media/colors/stratego-black.PNG")" alt="player" width="25" height="50"/>
-                </td>
-                }
-            }
-            </tr>
-        }
-        </table>
-    </div>
-        <div>
-            <form action=/undo>
-                <button>undo</button>
-            </form>
-            <form action=/redo>
-                <button>redo</button>
-            </form>
-            <form action=/save>
-                <button>save</button>
-            </form>
-            <form action=/load>
-                <button>load</button>
-            </form>
+    <body class="backgroundd">
+        <div class="row text-center">
+            <div class="col-12">
+                <img class="img-fluid" src="@routes.Assets.versioned("images/media/stratego-header-home-transparent.png")" alt="stratego-header-init"/>
+            </div>
+            <ul class="nav-start justify-content-center">
+                <li class="nav-item">
+                    <a href="/">New Game</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" target="_blank">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/undo#jump_header">Undo</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/redo#jump_header">Redo</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/save#jump_header">Save</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/load#jump_header">Load</a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:moveattack()">Move + Attack</a>
+                </li>
+            </ul>
+            <div id="won-header">
+                <h2 id="game-won"></h2>
+                <form action="/" id="won-btn">
+
+                </form>
+            </div>
+
+            <div id="jump_header">
+                <h2 class="color-blue" id="game-header"></h2>
+            </div>
+
+            <div class="init-game-top">
+                <img class="img-fluid img-game-top" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_top.jpg")"/>
+            </div>
+            <div class="mid-border">
+                <div class="row justify-content-center">
+                    <div class="col-auto init-game-left">
+                        <img class="img-game-left" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
+                    </div>
+                    <div class="col-auto init-game-mid" id="board">
+
+                    </div>
+                    <div class="col-auto init-game-right">
+                        <img class="img-game-right" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_right.jpg")"/>
+                    </div>
+                </div>
+            </div>
+            <div class="init-game-bot">
+                <img class="img-game-bot" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_bottom.jpg")"/>
+            </div>
         </div>
-    </center>
+    </body>
 }

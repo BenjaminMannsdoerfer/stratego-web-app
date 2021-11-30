@@ -1,18 +1,40 @@
 @()
 
 @main("Stratego") {
-    <center>
-    <h1>Welcome to Stratego</h1>
-    <h2>Please select fieldsize</h2>
-    <form action=/small>
-        <button> small </button>
-    </form>
-    <form action=/medium>
-        <button> medium </button>
-    </form>
-    <form action=/large>
-        <button> large </button>
-    </form>
-    <p><a href="/about" target="_blank">About our Game</a></p>
-    </center>
+    <body class="backgroundd">
+        <div class="row text-center">
+            <div class="col-12 test rounded mx-auto d-block ">
+                <a href="/">
+                    <img class="img rounded mx-auto d-block" src="@routes.Assets.versioned("images/media/stratego_title.png")"/>
+                </a>
+            </div>
+            <ul class="nav-start justify-content-center container-fluid">
+                <li class="nav-item">
+                    <a href="/about" target="_blank">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/load">Load</a>
+                </li>
+            </ul>
+            <div class="subtitl mt-0">
+                <h2>Please select the field size</h2>
+            </div>
+            <div class ="mt-0">
+                <form action=/small>
+                    <a href="/small" class="btn btn-dark btn-lg btn-primary-spacing" role="button" data-toggle="tooltip" data-placement="bottom" title="4x4">small</a>
+                </form>
+                <form action=/medium>
+                    <a href="/medium" class="btn btn-dark btn-lg btn-primary-spacing" role="button" data-toggle="tooltip" data-placement="bottom" title="7x7">medium</a>
+                </form>
+                <form action=/large>
+                    <a href="/large" class="btn btn-dark btn-lg btn-primary-spacing" role="button" data-toggle="tooltip" data-placement="bottom" title="10x10">large</a>
+                </form>
+            </div>
+            <div class="mt-0">
+                <a href="https://github.com/BenjaminMannsdoerfer/stratego-web-app" target="_blank">
+                    <img src="@routes.Assets.versioned("images/media/github.png")"width="80" height="80"/>
+                </a>
+            </div>
+        </div>
+    </body>
 }
