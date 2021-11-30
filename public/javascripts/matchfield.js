@@ -299,26 +299,6 @@ class MatchField {
                 "col": col,
                 "charac": charac
             }),
-
-            success: (result) => {
-                const {
-                    matchField,
-                    currentPlayer,
-                    currentPlayerIndex,
-                    playerListBufferBlue,
-                    playerListBufferRed,
-                    gameStatus
-                } = result
-                this.updateMatchField(matchField, playerListBufferBlue, playerListBufferRed, gameStatus)
-                this.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
-                this.updateView()
-                if (this.playerListBufferBlue === 0 && this.playerListBufferRed === 0) {
-                    $(location).attr("href", "/stratego");
-                }
-                if (this.playerListBufferBlue !== 40) {
-                    $("#init").html("")
-                }
-            }
         });
     }
 
@@ -333,21 +313,6 @@ class MatchField {
                 "col": col,
                 "dir": dir
             }),
-
-            success: (result) => {
-                const {
-                    matchField,
-                    currentPlayer,
-                    currentPlayerIndex,
-                    playerListBufferBlue,
-                    playerListBufferRed,
-                    gameStatus
-                } = result
-                this.updateMatchField(matchField, playerListBufferBlue, playerListBufferRed, gameStatus)
-                this.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
-                this.updateView()
-
-            }
         });
     }
 
@@ -363,20 +328,6 @@ class MatchField {
                 "rowD": rowD,
                 "colD": colD
             }),
-
-            success: (result) => {
-                const {
-                    matchField,
-                    currentPlayer,
-                    currentPlayerIndex,
-                    playerListBufferBlue,
-                    playerListBufferRed,
-                    gameStatus
-                } = result
-                this.updateMatchField(matchField, playerListBufferBlue, playerListBufferRed, gameStatus)
-                this.updateCurrentPlayer(currentPlayer, currentPlayerIndex)
-                this.updateView()
-            }
         });
     }
 
@@ -387,20 +338,19 @@ class MatchField {
         this.gameStatus = gameStatus
     }
 
-    updateCurrentPlayer(currentPlayer, currentPlayerIndex) {
+    updateCurrentPlayer(currentPlayer, currentPlayerIndex, gameStatus) {
         this.currentPlayerIndex = currentPlayerIndex
         this.currentPlayer = currentPlayer
-        if (currentPlayerIndex === 0) {
-            $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-blue")
-        } else {
-            $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-red")
+        if (this.playerListBufferBlue === 0 && this.playerListBufferRed === 0 && window.location.href.indexOf("set") > -1) {
+            $(location).attr("href", "/stratego");
         }
-        if (currentPlayerIndex === 0) {
-            $("#game-header").html(currentPlayer + " it's your turn").addClass("color-blue").removeClass("color-red")
-        } else {
-            $("#game-header").html(currentPlayer + " it's your turn").addClass("color-red").removeClass("color-blue")
+        if (this.gameStatus === "INIT" && window.location.href.indexOf("set") > -1) {
+            $(location).attr("href", "/stratego");
         }
-        if (this.gameStatus === "WON") {
+        if (this.playerListBufferBlue !== 40) {
+            $("#init").html("")
+        }
+        if (gameStatus === "WON") {
             $("#game-header").html("")
             if (currentPlayerIndex === 0) {
                 $("#game-won").html(currentPlayer + " you found the flag and won the game!").addClass("color-blue")
@@ -408,8 +358,20 @@ class MatchField {
                 $("#game-won").html(currentPlayer + " you found the flag and won the game!").addClass("color-red")
             }
             $("#won-btn").html('<button class="btn btn-dark btn-lg btn-primary-spacing">New Game</button>')
+        } else {
+            $("#game-won").html("")
+            $("#won-btn").html("")
+            if (currentPlayerIndex === 0) {
+                $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-blue")
+            } else {
+                $("#set-header").html("Enter your figures " + currentPlayer).addClass("color-red")
+            }
+            if (currentPlayerIndex === 0) {
+                $("#game-header").html(currentPlayer + " it's your turn").addClass("color-blue").removeClass("color-red")
+            } else {
+                $("#game-header").html(currentPlayer + " it's your turn").addClass("color-red").removeClass("color-blue")
+            }
         }
-
     }
 }
 
@@ -418,14 +380,13 @@ function loadJson() {
         method: "GET",
         url: "/json",
         dataType: "json",
-
         success: function (result) {
             matchField = new MatchField();
             size = result.machtfieldSize;
             matchField.updateMatchField(result.matchField, result.playerListBufferBlue, result.playerListBufferRed,
                 result.gameStatus);
-            matchField.updateView();
             matchField.updateCurrentPlayer(result.currentPlayer, result.currentPlayerIndex)
+            matchField.updateView();
         }
     });
 }
@@ -434,7 +395,8 @@ function connectWebSocket() {
     let websocket = new WebSocket("ws://localhost:9000/websocket")
     websocket.setTimeout
 
-    websocket.onopen = function(event) {
+    websocket.onopen = function (event) {
+        loadJson();
         console.log("Connected to Websocket");
     }
 
@@ -448,15 +410,23 @@ function connectWebSocket() {
 
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
+            console.log("socket")
+            matchField = new MatchField();
             let json = JSON.parse(e.data);
-            console.log("json loaded")
-            loadJson()
+            size = json.machtfieldSize;
+            let field = json.matchField
+            let currentPlayerIndex = json.currentPlayerIndex
+            let currentPlayer = json.currentPlayer
+            let gameStatus = json.gameStatus
+            let playerListBufferBlue = json.playerListBufferBlue
+            let playerListBufferRed = json.playerListBufferRed
+            matchField.updateMatchField(field, playerListBufferBlue, playerListBufferRed, gameStatus);
+            matchField.updateCurrentPlayer(currentPlayer, currentPlayerIndex, gameStatus)
+            matchField.updateView();
         }
-
     };
 }
 
 $(document).ready(function () {
-    loadJson();
     connectWebSocket()
 });
