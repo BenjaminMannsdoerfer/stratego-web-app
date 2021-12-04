@@ -1,0 +1,26 @@
+var strategoCols = [0,1,2,3,4,5,6,7,8,9]
+var strategoRows = [0,1,2,3,4,5,6,7,8,9]
+
+const app = Vue.createApp({})
+    app.component('gameboard', {
+    template:`
+        <div id="board">
+            <table id='tbl' class='matchfield'>
+                <tr class="char-pic field" v-for="r in rows">
+                    <td class="char-pic field" v-for="c in cols" v-bind:id="'row' + r + 'col' + c">
+                        <span>
+                            <input type="image" v-bind:class="'fig-cards ' + 'row' + r + 'col' + c" id="cards" alt="" src="" />
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    `,
+    data: function () {
+        return {
+            cols: strategoCols,
+            rows: strategoRows
+        }
+    },
+});
+app.mount('#gamefield')

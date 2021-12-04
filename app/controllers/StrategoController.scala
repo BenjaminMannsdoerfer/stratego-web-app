@@ -107,38 +107,6 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     Ok(views.html.setNames())
   }
 
-  def setFigures: Action[JsValue] = Action(parse.json) {
-    setRequest: Request[JsValue] => {
-      val charac = (setRequest.body \ "charac").as[String]
-      val row = (setRequest.body \ "row").as[Int]
-      val col = (setRequest.body \ "col").as[Int]
-      gameController.set(row, col, charac)
-      Ok(jsonObj())
-    }
-  }
-
-  def moveFigures: Action[JsValue] = Action(parse.json) {
-    moveRequest: Request[JsValue] => {
-      val dir = (moveRequest.body \ "dir").as[String].toCharArray
-      val row = (moveRequest.body \ "row").as[Int]
-      val col = (moveRequest.body \ "col").as[Int]
-      gameController.move(dir(0), row, col)
-      Ok(jsonObj())
-    }
-  }
-
-  def attackFigures: Action[JsValue] = Action(parse.json) {
-    attackRequest: Request[JsValue] => {
-      val row = (attackRequest.body \ "row").as[Int]
-      val col = (attackRequest.body \ "col").as[Int]
-      val rowD  = (attackRequest.body \ "rowD").as[Int]
-      val colD = (attackRequest.body \ "colD").as[Int]
-      println(row + " " + col + " " + rowD + " " + colD)
-      gameController.attack(row, col, rowD, colD)
-      Ok(jsonObj())
-    }
-  }
-
   def gameToJson: Action[AnyContent] = Action {
     Ok(jsonObj())
   }
@@ -196,6 +164,26 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
 
     def receive: Receive = {
       case msg: String =>
+        val cmd = Json.parse(msg).as[JsObject]
+        cmd.value.keySet.foreach {
+          case "set" =>
+            val charac = cmd.value("set")("charac").as[String]
+            val row = cmd.value("set")("row").as[Int]
+            val col = cmd.value("set")("col").as[Int]
+            gameController.set(row, col, charac)
+          case "move" =>
+            val dir = cmd.value("move")("dir").as[String].toCharArray
+            val row = cmd.value("move")("row").as[Int]
+            val col = cmd.value("move")("col").as[Int]
+            gameController.move(dir(0), row, col)
+          case "attack" =>
+            val row = cmd.value("attack")("row").as[Int]
+            val col = cmd.value("attack")("col").as[Int]
+            val rowD  = cmd.value("attack")("rowD").as[Int]
+            val colD = cmd.value("attack")("colD").as[Int]
+            gameController.attack(row, col, rowD, colD)
+          case "connected" =>
+        }
         out ! jsonObj().toString()
         println("Sent Json to client" + msg)
     }

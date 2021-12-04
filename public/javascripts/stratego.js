@@ -4,8 +4,13 @@ let row_enemy;
 let col_enemy;
 let charac;
 let dir;
-let attack = false;
-let matchField = new MatchField();
+let setAttack = false;
+let matchfield;
+
+$(document).ready(function(){
+    matchField = new MatchField;
+});
+
 
 $(document).on('click', '.field', (function () {
     row = this.parentElement.rowIndex;
@@ -13,17 +18,18 @@ $(document).on('click', '.field', (function () {
 }))
 
 $(document).on('click', '.field-game', (function () {
-    if (attack === false) {
+    if (setAttack === false) {
         row = this.parentElement.rowIndex;
         col = this.cellIndex;
+        console.log("row")
     } else {
         if (row === undefined || col === undefined) {
         } else {
             row_enemy = this.parentElement.rowIndex;
             col_enemy = this.cellIndex;
             if (matchField.gameStatus !== "WON") {
-                matchField.attack(row, col, row_enemy, col_enemy)
-                attack = false
+                attack(row, col, row_enemy, col_enemy)
+                setAttack = false
             }
         }
     }
@@ -75,7 +81,7 @@ $(document).keydown(function (event) {
         }
         if (charac === undefined || row === undefined || col === undefined) {
         } else {
-            matchField.set(row, col, charac);
+            set(row, col, charac);
             charac = "";
         }
     }
@@ -88,7 +94,7 @@ $(document).keydown(function (event) {
         switch (event.keyCode) {
         case 65:
         case 87:
-            attack = true;
+            setAttack = true;
             break;
         case 68:
         case 100:
@@ -115,7 +121,8 @@ $(document).keydown(function (event) {
         } else if (dir.length > 1 || row === undefined || col === undefined || attack === true) {
         } else {
             if (matchField.gameStatus !== "WON") {
-                matchField.move(dir, row, col);
+                console.log("move")
+                move(dir, row, col);
             }
 
         }
