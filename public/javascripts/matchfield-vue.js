@@ -1,12 +1,10 @@
-var strategoCols = [0,1,2,3,4,5,6,7,8,9]
-var strategoRows = [0,1,2,3,4,5,6,7,8,9]
-
+let matchFieldSize = 10;
 const app = Vue.createApp({})
     app.component('gameboard', {
     template:`
         <div id="board">
             <table id='tbl' class='matchfield'>
-                <tr class="char-pic field" v-for="r in rows">
+                <tr v-for="r in rows">
                     <td class="char-pic field" v-for="c in cols" v-bind:id="'row' + r + 'col' + c">
                         <span>
                             <input type="image" v-bind:class="'fig-cards ' + 'row' + r + 'col' + c" id="cards" alt="" src="" />
@@ -18,8 +16,8 @@ const app = Vue.createApp({})
     `,
     data: function () {
         return {
-            cols: strategoCols,
-            rows: strategoRows
+            cols: Array.from(Array(matchFieldSize).keys()),
+            rows: Array.from(Array(matchFieldSize).keys()),
         }
     },
 });

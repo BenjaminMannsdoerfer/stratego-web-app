@@ -5,7 +5,6 @@ let col_enemy;
 let charac;
 let dir;
 let setAttack = false;
-let matchfield;
 
 $(document).ready(function(){
     matchField = new MatchField;
@@ -15,6 +14,7 @@ $(document).ready(function(){
 $(document).on('click', '.field', (function () {
     row = this.parentElement.rowIndex;
     col = this.cellIndex;
+    console.log(row + " " + col)
 }))
 
 $(document).on('click', '.field-game', (function () {
@@ -79,8 +79,10 @@ $(document).keydown(function (event) {
                 charac = '9'; // 9
                 break;
         }
+        console.log(row + " " + col + " " + charac)
         if (charac === undefined || row === undefined || col === undefined) {
         } else {
+
             set(row, col, charac);
             charac = "";
         }

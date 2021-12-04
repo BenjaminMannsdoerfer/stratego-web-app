@@ -4,8 +4,9 @@ let websocket;
 class MatchField {
 
     constructor() {
-        this.fields = []
-        this.currentPlayerIndex = 0
+        this.size = size;
+        this.fields = [];
+        this.currentPlayerIndex = 0;
         this.currentPlayer = "";
         this.playerListBufferBlue = 40;
         this.playerListBufferRed = 40;
@@ -18,9 +19,13 @@ class MatchField {
             for (let col = 0; col < size; col++) {
                 if (this.fields[num].isSet) {
                     if (this.fields[num].colour === 0 && this.playerListBufferBlue !== 0 || this.fields[num].colour === 0 && this.currentPlayerIndex === 0 && this.playerListBufferBlue === 0) {
-                        let td = document.getElementById("row" + row + "col" + col)
-                        let img = $("." + "row" + row + "col" + col)
-                        td.className = "blue"
+                        let img = $("." + "row" + row + "col" + col).attr("class", "blue")
+                        /*let td = document.getElementsByClassName("row" + row + "col" + col)
+                        if (window.location.href.indexOf("set") > -1) {
+                            td.className = "field"
+                        } else {
+                            td.className = "field-game"
+                        }*/
                         switch (this.fields[num].figName) {
                             case 'F':
                                 img.attr('src', "/assets/images/media/figures/stratego-flag.svg").attr('alt', "F")
@@ -60,117 +65,47 @@ class MatchField {
                                 break;
                         }
                     } else if (this.fields[num].colour === 1 && this.playerListBufferRed !== 0 || this.fields[num].colour === 1 && this.currentPlayerIndex === 1 && this.playerListBufferRed === 0) {
-                        /*if (window.location.href.indexOf("set") > -1) {
-                            html += '<td class="char-pic field">'
-                        } else {
-                            html += '<td class="char-pic field-game">'
-                        }
+                        let img = $("." + "row" + row + "col" + col).attr("class", "red")
                         switch (this.fields[num].figName) {
                             case 'F':
-                                html += '<div class="red">'
-                                html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-flag.svg" alt="F"/></span>'
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-flag.svg").attr('alt', "F")
                                 break;
                             case 'B':
-                                html += '<div class="red">'
-                                html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-bomb.svg" alt="B"/> </span>'
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-bomb.svg").attr('alt', "B")
                                 break;
                             case 'M':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-marshal.svg" alt="M"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-marshal.svg" alt="M"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-marshal.svg").attr('alt', "M")
                                 break;
                             case '1':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-spy.svg" alt="1"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-spy.svg" alt="1"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-spy.svg").attr('alt', "1")
                                 break;
                             case '2':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-scout.svg" alt="2"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-scout.svg" alt="2"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-scout.svg").attr('alt', "2")
                                 break;
                             case '3':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-miner.svg" alt="3"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-miner.svg" alt="3"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-miner.svg").attr('alt', "3")
                                 break;
                             case '4':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-sergeant.svg" alt="4"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-sergeant.svg" alt="4"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-sergeant.svg").attr('alt', "4")
                                 break;
                             case '5':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-lieutenant.svg" alt="5"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-lieutenant.svg" alt="5"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-lieutenant.svg").attr('alt', "5")
                                 break;
                             case '6':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-captain.svg" alt="6"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-captain.svg" alt="6"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-captain.svg").attr('alt', "6")
                                 break;
                             case '7':
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-major.svg" alt="7"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-major.svg" alt="7"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-major.svg").attr('alt', "7")
                                 break;
                             case "8":
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-colonel.svg" alt="8"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-colonel.svg" alt="8"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-colonel.svg").attr('alt', "8")
                                 break;
                             case "9":
-                                html += '<div class="red">'
-                                if (window.location.href.indexOf("set") > -1) {
-                                    html += '<img class="fig-cards" src="/assets/images/media/figures/stratego-general.svg" alt="9"/> </span>'
-                                } else {
-                                    html += '<input type="image" class="fig-cards" src="/assets/images/media/figures/stratego-general.svg" alt="9"/> </span>'
-                                }
-                                html += '</div>'
+                                img.attr('src', "/assets/images/media/figures/stratego-general.svg").attr('alt', "9")
                                 break;
-                        }*/
+                        }
                     } else if (this.playerListBufferBlue === 0 && this.fields[num].colour === 0) {
-                        let td = document.getElementById("row" + row + "col" + col)
                         let img = $("." + "row" + row + "col" + col)
-                        td.className = "char-pic"
                         if (window.location.href.indexOf("set") > -1) {
                             img.attr('src', "/assets/images/media/colors/stratego-blue.png").attr('alt', "blue").addClass("fig-cards")
                         } else {
@@ -180,11 +115,9 @@ class MatchField {
                         }
 
                     } else if (this.playerListBufferRed === 0 && this.fields[num].colour === 1) {
-                        let td = document.getElementById("row" + row + "col" + col)
                         let img = $("." + "row" + row + "col" + col)
-                        td.className = "char-pic"
                         if (window.location.href.indexOf("set") > -1) {
-                            img.attr('src', "/assets/images/media/colors/stratego-red.png").attr('alt', "blue").addClass("fig-cards")
+                            img.attr('src', "/assets/images/media/colors/stratego-red.png").attr('alt', "red").addClass("fig-cards")
                         } else {
                             /*html += '<td class="char-pic field-game">'
                             html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
@@ -192,16 +125,16 @@ class MatchField {
                         }
                     }
                 } else if (this.fields[num].water === '~' || this.fields[num].row === 4 || this.fields[num].row === 5) {
-                    let td = document.getElementById("row" + row + "col" + col)
+                    let td = document.getElementsByClassName("row" + row + "col" + col)
                     td.className = "char-pic hidden"
                 } else {
-                    let td = document.getElementById("row" + row + "col" + col)
+                    let td = document.getElementsByClassName("row" + row + "col" + col)
                     let input = $("." + "row" + row + "col" + col)
-
-                    td.className = "char-pic field hidden"
                     if (window.location.href.indexOf("set") > -1) {
+                        td.className = "field char-pic field hidden"
                         input.attr('src', "/assets/images/media/colors/stratego-black.png").attr('alt', "black").addClass("fig-cards")
                     } else {
+                        td.className = "field-game char-pic field hidden"
                         /*html += '<td class="char-pic field-game">'
                         html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
                         html += '</td>'*/
@@ -307,7 +240,6 @@ function connectWebSocket() {
 
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
-            console.log("socket")
             let matchField = new MatchField;
             let json = JSON.parse(e.data);
             size = json.machtfieldSize;
