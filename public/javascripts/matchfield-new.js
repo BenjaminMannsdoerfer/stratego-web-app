@@ -1,3 +1,4 @@
+/*
 let size = 10;
 let websocket;
 
@@ -115,9 +116,9 @@ class MatchField {
                             img.attr('src', "/assets/images/media/colors/stratego-red.png")
                         } else {
                             img.attr('src', "/assets/images/media/colors/stratego-red.png")
-                            /*html += '<td class="char-pic field-game">'
+                            /!*html += '<td class="char-pic field-game">'
                             html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
-                            html += '</td>'*/
+                            html += '</td>'*!/
                         }
                     }
                 } else if (this.fields[num].water === '~' || this.fields[num].row === 4 || this.fields[num].row === 5) {
@@ -137,9 +138,9 @@ class MatchField {
 
                         //td.className = "char-pic"
                         //$('.hidden').append('<div></div>');
-                        /*html += '<td class="char-pic field-game">'
+                        /!*html += '<td class="char-pic field-game">'
                         html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
-                        html += '</td>'*/
+                        html += '</td>'*!/
                     }
                 }
                 num++;
@@ -261,3 +262,4 @@ function connectWebSocket() {
 $(document).ready(function () {
     connectWebSocket()
 });
+*/

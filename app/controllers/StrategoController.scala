@@ -5,8 +5,8 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import javax.inject._
 import play.api.mvc._
 import de.htwg.se.stratego.Stratego
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, PlayerSwitch, MachtfieldInitialized, PlayerChanged}
-import play.api.libs.json.{JsNumber, JsObject, JsValue, Json}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, PlayerChanged, PlayerSwitch}
+import play.api.libs.json.{JsArray, JsBoolean, JsNumber, JsObject, JsValue, Json}
 import play.api.libs.streams.ActorFlow
 import akka.stream.Materializer
 
@@ -14,8 +14,9 @@ import scala.swing.Reactor
 
 
 @Singleton
-class StrategoController @Inject()(cc: ControllerComponents) (implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
+class StrategoController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
+
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
   def home: Action[AnyContent] = Action {
@@ -35,7 +36,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
     else
       gameController.setPlayers(player1 + " " + player2)
-      Ok(views.html.initGame(gameController))
+    Ok(views.html.initGame(gameController))
   }
 
   def init: Action[AnyContent] = Action {
@@ -43,22 +44,22 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     Ok(views.html.playGame(gameController))
   }
 
-  def setCharacter(row:Int, col:Int, charac:Char): Action[AnyContent] = Action {
-    gameController.set(row,col,charac.toString)
-    if(gameController.playerListBuffer(1).characterList.size==0) {
+  def setCharacter(row: Int, col: Int, charac: Char): Action[AnyContent] = Action {
+    gameController.set(row, col, charac.toString)
+    if (gameController.playerListBuffer(1).characterList.size == 0) {
       Ok(views.html.playGame(gameController))
     } else {
       Ok(views.html.initGame(gameController))
     }
   }
 
-  def move(dir:Char,row:Int,col:Int) = Action {
+  def move(dir: Char, row: Int, col: Int) = Action {
     gameController.move(dir, row, col)
     Ok(views.html.playGame(gameController))
   }
 
-  def attack (rowA:Int, colA:Int, rowD:Int, colD:Int) = Action {
-    gameController.attack(rowA,colA, rowD, colD)
+  def attack(rowA: Int, colA: Int, rowD: Int, colD: Int) = Action {
+    gameController.attack(rowA, colA, rowD, colD)
     Ok(views.html.playGame(gameController))
   }
 
@@ -111,41 +112,87 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
     Ok(jsonObj())
   }
 
-  def jsonObj(): JsObject =  {
+  def jsonObj(): JsObject = {
     Json.obj(
       "gameStatus" -> (gameController.gameStatus),
-      "machtfieldSize" -> JsNumber(gameController.getSize),
+      "matchfieldSize" -> JsNumber(gameController.getSize),
       "playerListBufferBlue" -> (gameController.playerListBuffer(0).characterList.size),
       "playerListBufferRed" -> (gameController.playerListBuffer(1).characterList.size),
       "currentPlayerIndex" -> JsNumber(gameController.currentPlayerIndex),
       "currentPlayer" -> (gameController.playerListBuffer(gameController.currentPlayerIndex)).toString(),
-      "players" -> (gameController.playerList.head + " "+ gameController.playerList(1)),
-      "matchField"-> Json.toJson(
-        for{
-          row <- 0 until gameController.getField.matrixSize
+      "players" -> (gameController.playerList.head + " " + gameController.playerList(1)),
+      "matchField" -> JsArray(
+        for {
           col <- 0 until gameController.getField.matrixSize
         } yield {
-          var obj = Json.obj(
-            "row" -> row,
-            "col" -> col
-          )
-          if (gameController.getField.isWater(row,col)) {
-            obj = obj.++(Json.obj(
-              "water" -> "~"))
-          }
-          if(gameController.getField.field(row,col).isSet) {
-            obj = obj.++(Json.obj(
-              "figName" -> gameController.getField.field(row, col).character.get.figure.name,
-              "figValue" -> gameController.getField.field(row, col).character.get.figure.value,
-              "colour" -> gameController.getField.field(row, col).colour.get.value,
-              "isSet" -> gameController.getField.field(row, col).isSet
+          Json.obj("cols" -> JsArray(for {
+            row <- 0 until gameController.getField.matrixSize
+          } yield {
+            var obj = Json.obj(
+              "row" -> row,
+              "col" -> col,
+              "isSet" -> gameController.getField.field(row, col).isSet,
+              "blackSrc" -> getBlackCard(row, col)
             )
-            )
-          }
-          obj
+            if (gameController.getField.isWater(row, col)) {
+              obj = obj.++(Json.obj(
+                "water" -> "~"))
+            }
+            if (gameController.getField.field(row, col).isSet) {
+              obj = obj.++(Json.obj(
+                "figSrc" -> getFigureCard(row, col),
+                "blueSrc" -> getBlueCard(row, col),
+                "redSrc" -> getRedCard(row, col),
+                "colour" -> JsBoolean(if(gameController.getField.field(row, col).colour.get.value == 0) {
+                  true
+                } else {
+                  false
+                }),
+                //"isSet" -> gameController.getField.field(row, col).isSet
+              )
+              )
+            }
+            obj
+          }))
         }
       )
     )
+  }
+
+  def getFigureCard(row: Int, col: Int): String = {
+    gameController.getField.field(row, col).character.get.figure.name match {
+      case "F" => "/assets/images/media/figures/stratego-flag.svg"
+      case "B" => "/assets/images/media/figures/stratego-bomb.svg"
+      case "M" => "/assets/images/media/figures/stratego-marshal.svg"
+      case "1" => "/assets/images/media/figures/stratego-spy.svg"
+      case "2" => "/assets/images/media/figures/stratego-scout.svg"
+      case "3" => "/assets/images/media/figures/stratego-miner.svg"
+      case "4" => "/assets/images/media/figures/stratego-sergeant.svg"
+      case "5" => "/assets/images/media/figures/stratego-lieutenant.svg"
+      case "6" => "/assets/images/media/figures/stratego-captain.svg"
+      case "7" => "/assets/images/media/figures/stratego-major.svg"
+      case "8" => "/assets/images/media/figures/stratego-colonel.svg"
+      case "9" => "/assets/images/media/figures/stratego-general.svg"
+    }
+  }
+  def getBlueCard(row: Int, col: Int): String = {
+    if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 0) {
+      return "/assets/images/media/colors/stratego-blue.png"
+    }
+    return ""
+  }
+
+  def getRedCard(row: Int, col: Int): String = {
+    if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 1) {
+      return "/assets/images/media/colors/stratego-red.png"
+    }
+    return ""
+  }
+  def getBlackCard(row: Int, col: Int): String = {
+        if (!gameController.getField.field(row, col).isSet) {
+          return "/assets/images/media/colors/stratego-black.PNG"
+        }
+    return ""
   }
 
   def socket: WebSocket = WebSocket.accept[String, String] { request =>
@@ -154,12 +201,14 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
       StrategoWebSocketActorFactory.create(out)
     }
   }
-  object StrategoWebSocketActorFactory{
+
+  object StrategoWebSocketActorFactory {
     def create(out: ActorRef): Props = {
       Props(new StrategoWebSocketActor(out))
     }
   }
-  class StrategoWebSocketActor(out: ActorRef) extends Actor with Reactor{
+
+  class StrategoWebSocketActor(out: ActorRef) extends Actor with Reactor {
     listenTo(gameController)
 
     def receive: Receive = {
@@ -179,7 +228,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
           case "attack" =>
             val row = cmd.value("attack")("row").as[Int]
             val col = cmd.value("attack")("col").as[Int]
-            val rowD  = cmd.value("attack")("rowD").as[Int]
+            val rowD = cmd.value("attack")("rowD").as[Int]
             val colD = cmd.value("attack")("colD").as[Int]
             gameController.attack(row, col, rowD, colD)
           case "connected" =>
@@ -188,7 +237,7 @@ class StrategoController @Inject()(cc: ControllerComponents) (implicit system: A
         println("Sent Json to client" + msg)
     }
 
-    reactions+= {
+    reactions += {
       case event: FieldChanged => sendJsonToClient
       case event: PlayerSwitch => sendJsonToClient
       case event: PlayerChanged => sendJsonToClient

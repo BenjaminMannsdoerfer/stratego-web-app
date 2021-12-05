@@ -1,3 +1,4 @@
+/*
 let row;
 let col;
 let row_enemy;
@@ -6,16 +7,14 @@ let charac;
 let dir;
 let setAttack = false;
 
-$(document).ready(function(){
-    matchField = new MatchField;
-});
 
 
-/*$(document).on('click', '.field', (function () {
+
+/!*$(document).on('click', '.field', (function () {
     row = this.parentElement.rowIndex;
     col = this.cellIndex;
     console.log(row + " " + col)
-}))*/
+}))*!/
 
 $(document).on('click', '.field', (function () {
     if (setAttack === false) {
@@ -179,3 +178,4 @@ function moveattack() {
     msg+= newLine;
     alert(msg);
 }
+*/
