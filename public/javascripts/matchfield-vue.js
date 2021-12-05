@@ -1,4 +1,5 @@
 let matchFieldSize = 10;
+
 const app = Vue.createApp({})
     app.component('gameboard', {
     template:`
@@ -6,7 +7,7 @@ const app = Vue.createApp({})
             <table id='tbl' class='matchfield'>
                 <tr v-for="r in rows">
                     <td class="char-pic field" v-for="c in cols" v-bind:id="'row' + r + 'col' + c">
-                        <input type="image" v-bind:class="'fig-cards ' + 'row' + r + 'col' + c" alt="" src="" />
+                        <input type="image" v-bind:class="'row' + r + 'col' + c + ' fig-cards'" alt="" src="" />
                     </td>
                 </tr>
             </table>

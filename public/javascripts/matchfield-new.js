@@ -125,12 +125,15 @@ class MatchField {
                     td.className = "char-pic hidden"
                 } else {
                     let td = document.getElementById("row" + row + "col" + col)
-                    let input = $("." + "row" + row + "col" + col)
+                    console.log("test")
+                    let input = $("." + "row" + row + "col" + col).removeAttr("class", "red").removeAttr("class", "blue").addClass("row" + row + "col" + col + " fig-cards")
                     if (window.location.href.indexOf("set") > -1) {
                         td.className = "field char-pic hidden"
                         input.attr('src', "/assets/images/media/colors/stratego-black.png").attr('alt', "black")
                     } else {
+                        console.log("hidden")
                         input.attr("src", "").attr("alt", "")
+                        console.log(input)
 
                         //td.className = "char-pic"
                         //$('.hidden').append('<div></div>');
@@ -239,7 +242,6 @@ function connectWebSocket() {
 
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
-            console.log("socket")
             let matchField = new MatchField;
             let json = JSON.parse(e.data);
             size = json.machtfieldSize;

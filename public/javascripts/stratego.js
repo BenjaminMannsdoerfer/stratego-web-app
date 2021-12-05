@@ -122,7 +122,6 @@ $(document).keydown(function (event) {
         } else if (dir.length > 1 || row === undefined || col === undefined || attack === true) {
         } else {
             if (matchField.gameStatus !== "WON") {
-                console.log("move")
                 move(dir, row, col);
             }
 
