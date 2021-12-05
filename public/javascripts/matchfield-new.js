@@ -19,13 +19,7 @@ class MatchField {
             for (let col = 0; col < size; col++) {
                 if (this.fields[num].isSet) {
                     if (this.fields[num].colour === 0 && this.playerListBufferBlue !== 0 || this.fields[num].colour === 0 && this.currentPlayerIndex === 0 && this.playerListBufferBlue === 0) {
-                        let img = $("." + "row" + row + "col" + col).attr("class", "blue")
-                        /*let td = document.getElementsByClassName("row" + row + "col" + col)
-                        if (window.location.href.indexOf("set") > -1) {
-                            td.className = "field"
-                        } else {
-                            td.className = "field-game"
-                        }*/
+                        let img = $("." + "row" + row + "col" + col).addClass(" blue")
                         switch (this.fields[num].figName) {
                             case 'F':
                                 img.attr('src', "/assets/images/media/figures/stratego-flag.svg").attr('alt', "F")
@@ -65,7 +59,7 @@ class MatchField {
                                 break;
                         }
                     } else if (this.fields[num].colour === 1 && this.playerListBufferRed !== 0 || this.fields[num].colour === 1 && this.currentPlayerIndex === 1 && this.playerListBufferRed === 0) {
-                        let img = $("." + "row" + row + "col" + col).attr("class", "red")
+                        let img = $("." + "row" + row + "col" + col).addClass(" red")
                         switch (this.fields[num].figName) {
                             case 'F':
                                 img.attr('src', "/assets/images/media/figures/stratego-flag.svg").attr('alt', "F")
@@ -107,8 +101,9 @@ class MatchField {
                     } else if (this.playerListBufferBlue === 0 && this.fields[num].colour === 0) {
                         let img = $("." + "row" + row + "col" + col)
                         if (window.location.href.indexOf("set") > -1) {
-                            img.attr('src', "/assets/images/media/colors/stratego-blue.png").attr('alt', "blue").addClass("fig-cards")
+                            img.attr('src', "/assets/images/media/colors/stratego-blue.png")
                         } else {
+                            img.attr('src', "/assets/images/media/colors/stratego-blue.png")
                             // html += '<td class="char-pic field-game">'
                             // html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-blue.png" alt="blue"/> </span>'
                             // html += '</td>'
@@ -117,8 +112,9 @@ class MatchField {
                     } else if (this.playerListBufferRed === 0 && this.fields[num].colour === 1) {
                         let img = $("." + "row" + row + "col" + col)
                         if (window.location.href.indexOf("set") > -1) {
-                            img.attr('src', "/assets/images/media/colors/stratego-red.png").attr('alt', "red").addClass("fig-cards")
+                            img.attr('src', "/assets/images/media/colors/stratego-red.png")
                         } else {
+                            img.attr('src', "/assets/images/media/colors/stratego-red.png")
                             /*html += '<td class="char-pic field-game">'
                             html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
                             html += '</td>'*/
@@ -128,13 +124,16 @@ class MatchField {
                     let td = document.getElementsByClassName("row" + row + "col" + col)
                     td.className = "char-pic hidden"
                 } else {
-                    let td = document.getElementsByClassName("row" + row + "col" + col)
+                    let td = document.getElementById("row" + row + "col" + col)
                     let input = $("." + "row" + row + "col" + col)
                     if (window.location.href.indexOf("set") > -1) {
-                        td.className = "field char-pic field hidden"
-                        input.attr('src', "/assets/images/media/colors/stratego-black.png").attr('alt', "black").addClass("fig-cards")
+                        td.className = "field char-pic hidden"
+                        input.attr('src', "/assets/images/media/colors/stratego-black.png").attr('alt', "black")
                     } else {
-                        td.className = "field-game char-pic field hidden"
+                        input.attr("src", "").attr("alt", "")
+
+                        //td.className = "char-pic"
+                        //$('.hidden').append('<div></div>');
                         /*html += '<td class="char-pic field-game">'
                         html += '<input type="image" class="fig-cards" src="/assets/images/media/colors/stratego-red.png" alt="red"/> </span>'
                         html += '</td>'*/
@@ -240,6 +239,7 @@ function connectWebSocket() {
 
     websocket.onmessage = function (e) {
         if (typeof e.data === "string") {
+            console.log("socket")
             let matchField = new MatchField;
             let json = JSON.parse(e.data);
             size = json.machtfieldSize;

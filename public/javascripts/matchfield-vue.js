@@ -6,9 +6,7 @@ const app = Vue.createApp({})
             <table id='tbl' class='matchfield'>
                 <tr v-for="r in rows">
                     <td class="char-pic field" v-for="c in cols" v-bind:id="'row' + r + 'col' + c">
-                        <span>
-                            <input type="image" v-bind:class="'fig-cards ' + 'row' + r + 'col' + c" id="cards" alt="" src="" />
-                        </span>
+                        <input type="image" v-bind:class="'fig-cards ' + 'row' + r + 'col' + c" alt="" src="" />
                     </td>
                 </tr>
             </table>

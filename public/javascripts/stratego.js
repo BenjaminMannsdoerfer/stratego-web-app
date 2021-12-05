@@ -11,17 +11,16 @@ $(document).ready(function(){
 });
 
 
-$(document).on('click', '.field', (function () {
+/*$(document).on('click', '.field', (function () {
     row = this.parentElement.rowIndex;
     col = this.cellIndex;
     console.log(row + " " + col)
-}))
+}))*/
 
-$(document).on('click', '.field-game', (function () {
+$(document).on('click', '.field', (function () {
     if (setAttack === false) {
         row = this.parentElement.rowIndex;
         col = this.cellIndex;
-        console.log("row")
     } else {
         if (row === undefined || col === undefined) {
         } else {
