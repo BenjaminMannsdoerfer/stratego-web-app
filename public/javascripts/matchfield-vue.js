@@ -18,7 +18,6 @@ Vue.createApp({
             colD: 0
         }
     },
-    computed: {},
     methods: {
         createWebsocket() {
             //this.websocket.setTimeout
@@ -50,6 +49,7 @@ Vue.createApp({
                     this.gameStatus = json.gameStatus
                     this.playerListBufferBlue = json.playerListBufferBlue
                     this.playerListBufferRed = json.playerListBufferRed
+                    this.test()
                     if (this.playerListBufferBlue === 0 && this.playerListBufferRed === 0 && window.location.href.indexOf("set") > -1) {
                         this.goToPlayGame()
                     }
@@ -60,6 +60,40 @@ Vue.createApp({
             await new Promise(resolve => setTimeout(resolve, 3000));
             $(location).attr("href", "/stratego");
         },
+
+
+        test () {
+            if (this.gameStatus === "INIT" && window.location.href.indexOf("set") > -1) {
+                $(location).attr("href", "/stratego");
+            }
+            if (this.playerListBufferBlue !== 40) {
+                $("#init").html("")
+            }
+            if (this.gameStatus === "WON") {
+                $("#game-header").html("")
+                if (this.currentPlayerIndex === 0) {
+                    $("#game-won").html(this.currentPlayer + " you found the flag and won the game!").addClass("color-blue")
+                } else {
+                    $("#game-won").html(this.currentPlayer + " you found the flag and won the game!").addClass("color-red")
+                }
+                $("#won-btn").html('<button class="btn btn-dark btn-lg btn-primary-spacing">New Game</button>')
+            } else {
+                $("#game-won").html("")
+                $("#won-btn").html("")
+                if (this.currentPlayerIndex === 0) {
+                    $("#set-header").html("Enter your figures " + this.currentPlayer).addClass("color-blue")
+                } else {
+                    $("#set-header").html("Enter your figures " + this.currentPlayer).addClass("color-red")
+                }
+                if (this.currentPlayerIndex === 0) {
+                    $("#game-header").html(this.currentPlayer + " it's your turn").addClass("color-blue").removeClass("color-red")
+                } else {
+                    $("#game-header").html(this.currentPlayer + " it's your turn").addClass("color-red").removeClass("color-blue")
+                }
+
+            }
+        },
+
 
         set(row, col, charac) {
             this.websocket.send(JSON.stringify({
@@ -185,7 +219,7 @@ Vue.createApp({
                     this.move(this.dir, this.row, this.col);
                 }
             }
-        }
+        },
     },
     created() {
         this.createWebsocket();
