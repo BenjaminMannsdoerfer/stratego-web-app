@@ -11,12 +11,14 @@ Vue.createApp({
             gameStatus: "",
             row: 0,
             col: 0,
-            charac: ""
+            charac: "",
+            setAttack: false,
+            dir: '',
+            rowD: 0,
+            colD: 0
         }
     },
-    computed: {
-
-    },
+    computed: {},
     methods: {
         createWebsocket() {
             //this.websocket.setTimeout
@@ -53,8 +55,6 @@ Vue.createApp({
                     }
                 }
             };
-
-
         },
         async goToPlayGame() {
             await new Promise(resolve => setTimeout(resolve, 3000));
@@ -91,11 +91,24 @@ Vue.createApp({
                 }
             }))
         },
+
         clickSet(row, col) {
-            this.row = row
-            this.col = col
-            console.log(row + " " + col);
+            if (this.setAttack === false) {
+                this.row = row
+                this.col = col
+            } else {
+                if (this.row !== undefined || this.col !== undefined) {
+                    this.rowD = row
+                    this.colD = col
+                    if (this.gameStatus !== "WON") {
+                        this.attack(this.row, this.col, this.rowD, this.colD)
+                        this.setAttack = false
+                    }
+                    console.log(row + " " + col);
+                }
+            }
         },
+
         onkeydown(event) {
             switch (event.keyCode) {
                 case 70:
@@ -137,9 +150,41 @@ Vue.createApp({
                 case 57:
                     this.charac = '9'; // 9
                     break;
+                case 65:
+                case 87:
+                    this.setAttack = true;
+                    break;
+                case 68:
+                case 100:
+                case 40:
+                    this.dir = 'd'; // d
+                    break;
+                case 85:
+                case 117:
+                case 38:
+                    this.dir = 'u'; // u
+                    break;
+                case 76:
+                case 108:
+                case 37:
+                    this.dir = 'l'; // l
+                    break;
+                case 82:
+                case 114:
+                case 39:
+                    this.dir = 'r'; // r
+                    break;
             }
-            console.log(this.charac)
-            this.set(this.row, this.col, this.charac)
+            if (this.charac !== "") {
+                this.set(this.row, this.col, this.charac)
+            }
+            if (this.dir === undefined) {
+            } else if (this.dir.length > 1 || this.row === undefined || this.col === undefined || this.setAttack === true) {
+            } else {
+                if (this.gameStatus !== "WON") {
+                    this.move(this.dir, this.row, this.col);
+                }
+            }
         }
     },
     created() {
