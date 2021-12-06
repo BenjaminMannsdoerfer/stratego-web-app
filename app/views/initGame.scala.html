@@ -33,8 +33,6 @@
                     </div>
                     <div id="gamefield" class="col-auto init-game-mid">
                         <div id="app">
-                            <keydown-events v-on:keyup="keydownEvent">
-
                             <table class="matchfield">
                                 <tbody>
                                     <template v-for="row in fields">
@@ -44,12 +42,20 @@
                                                         <div v-if="aField.colour && this.playerListBufferBlue !== 0" >
                                                             <input class="fig-cards blue" type="image" v-on:click="" :src="aField.figSrc" alt=""/>
                                                         </div>
+                                                       <div v-else-if="!aField.colour && this.playerListBufferRed !== 0">
+                                                            <input class="fig-cards red" type="image" v-on:click="" :src="aField.figSrc" alt=""/>
+                                                        </div>
+                                                        <div v-else-if="this.playerListBufferBlue === 0 && aField.colour">
+                                                            <input class="fig-cards" type="image" v-on:click="" :src="aField.blueSrc" alt="blue"/>
+                                                        </div>
+                                                        <div v-else-if="this.playerListBufferRed === 0 && !aField.colour">
+                                                            <input class="fig-cards" type="image" v-on:click="" :src="aField.redSrc" alt="red"/>
+                                                        </div>
                                                     </td>
                                                 <td v-else-if="aField.isWater" class="char-pic">
-@*                                                    <div class="hidden"></div>*@
                                                 </td>
                                                 <td v-else class="char-pic field">
-                                                    <input class="fig-cards" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.blackSrc" alt=""/>
+                                                    <input class="fig-cards" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.blackSrc" alt="black"/>
                                                 </td>
                                             </template>
                                         </tr>
@@ -58,22 +64,7 @@
                             </table>
                             </keydown-events>
                         </div>
-
                     </div>
-
-
-
-                    @* <div :key="aField.col + aField.row" style="height: 80px;*@
-                    @* width: 80px;">*@
-                    @*<div v-else class="cardPlaceholder">
-                    <img style="pointer-events: none;" class="cardImage" :src="col.src" :style="{ transform: 'rotate(' + col.rotation + 'deg)'}">
-                    <template v-for="manican in col.manicans">
-                    <img style="pointer-events: none" :class="manican.dir" :src="manican.src">
-                    </template>
-                    </div>*@
-
-                    @* <div class="col-auto init-game-mid" id="board">*@
-
                     <div class="col-auto init-game-right">
                         <img class="img-game-right" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_right.jpg")"/>
                     </div>
