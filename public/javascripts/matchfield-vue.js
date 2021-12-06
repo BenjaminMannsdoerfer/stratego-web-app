@@ -49,7 +49,7 @@ Vue.createApp({
                     this.gameStatus = json.gameStatus
                     this.playerListBufferBlue = json.playerListBufferBlue
                     this.playerListBufferRed = json.playerListBufferRed
-                    this.test()
+                    this.checkGame()
                     if (this.playerListBufferBlue === 0 && this.playerListBufferRed === 0 && window.location.href.indexOf("set") > -1) {
                         this.goToPlayGame()
                     }
@@ -57,12 +57,11 @@ Vue.createApp({
             };
         },
         async goToPlayGame() {
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
             $(location).attr("href", "/stratego");
         },
 
-
-        test () {
+        checkGame () {
             if (this.gameStatus === "INIT" && window.location.href.indexOf("set") > -1) {
                 $(location).attr("href", "/stratego");
             }
@@ -90,10 +89,8 @@ Vue.createApp({
                 } else {
                     $("#game-header").html(this.currentPlayer + " it's your turn").addClass("color-red").removeClass("color-blue")
                 }
-
             }
         },
-
 
         set(row, col, charac) {
             this.websocket.send(JSON.stringify({
@@ -212,7 +209,7 @@ Vue.createApp({
             if (this.charac !== "") {
                 this.set(this.row, this.col, this.charac)
             }
-            if (this.dir === undefined) {
+            if (this.dir === undefined || this.dir === "") {
             } else if (this.dir.length > 1 || this.row === undefined || this.col === undefined || this.setAttack === true) {
             } else {
                 if (this.gameStatus !== "WON") {
