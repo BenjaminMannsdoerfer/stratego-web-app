@@ -123,16 +123,17 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       "players" -> (gameController.playerList.head + " " + gameController.playerList(1)),
       "matchField" -> JsArray(
         for {
-          col <- 0 until gameController.getField.matrixSize
+          row <- 0 until gameController.getField.matrixSize
         } yield {
           Json.obj("cols" -> JsArray(for {
-            row <- 0 until gameController.getField.matrixSize
+            col <- 0 until gameController.getField.matrixSize
           } yield {
             var obj = Json.obj(
               "row" -> row,
               "col" -> col,
               "isSet" -> gameController.getField.field(row, col).isSet,
-              "blackSrc" -> getBlackCard(row, col)
+              "blackSrc" -> getBlackCard(row, col),
+              "isWater" -> gameController.getField.isWater(row, col)
             )
             if (gameController.getField.isWater(row, col)) {
               obj = obj.++(Json.obj(

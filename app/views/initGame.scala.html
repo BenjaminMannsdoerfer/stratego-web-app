@@ -33,6 +33,8 @@
                     </div>
                     <div id="gamefield" class="col-auto init-game-mid">
                         <div id="app">
+                            <keydown-events v-on:keyup="keydownEvent">
+
                             <table class="matchfield">
                                 <tbody>
                                     <template v-for="row in fields">
@@ -40,18 +42,23 @@
                                             <template v-for="aField in row.cols">
                                                     <td v-if="aField.isSet" class="char-pic field">
                                                         <div v-if="aField.colour && this.playerListBufferBlue !== 0" >
-                                                            <input class="fig-cards" type="image" v-on:click="" :src="aField.figSrc"/>
+                                                            <input class="fig-cards blue" type="image" v-on:click="" :src="aField.figSrc" alt=""/>
                                                         </div>
                                                     </td>
-                                                <td v-else class="char-pic">
-                                                    <input class="fig-cards" type="image" v-on:click="" :src="aField.blackSrc"/>
+                                                <td v-else-if="aField.isWater" class="char-pic">
+@*                                                    <div class="hidden"></div>*@
+                                                </td>
+                                                <td v-else class="char-pic field">
+                                                    <input class="fig-cards" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.blackSrc" alt=""/>
                                                 </td>
                                             </template>
                                         </tr>
                                     </template>
                                 </tbody>
                             </table>
+                            </keydown-events>
                         </div>
+
                     </div>
 
 
