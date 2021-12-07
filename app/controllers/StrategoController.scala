@@ -114,6 +114,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
 
   def jsonObj(): JsObject = {
     Json.obj(
+      "border" -> Json.obj("bot" ->getBottomBorder(),"left"->getLeftBorder(), "top"->getTopBorder(), "right" -> getRightBorder()),
       "gameStatus" -> (gameController.gameStatus),
       "matchfieldSize" -> JsNumber(gameController.getSize),
       "playerListBufferBlue" -> (gameController.playerListBuffer(0).characterList.size),
@@ -194,6 +195,18 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           return "/assets/images/media/colors/stratego-black.PNG"
         }
     return ""
+  }
+  def getTopBorder(): String = {
+    return "/assets/images/media/Redwall_Stratego_Board_border_top.jpg"
+  }
+  def getLeftBorder(): String = {
+    return "/assets/images/media/Redwall_Stratego_Board_border_left.jpg"
+  }
+  def getRightBorder(): String = {
+    return "/assets/images/media/Redwall_Stratego_Board_border_right.jpg"
+  }
+  def getBottomBorder(): String = {
+    return "/assets/images/media/Redwall_Stratego_Board_border_bottom.jpg"
   }
 
   def socket: WebSocket = WebSocket.accept[String, String] { request =>

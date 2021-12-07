@@ -1,7 +1,7 @@
 @(controller: de.htwg.se.stratego.controller.controllerComponent.ControllerInterface)
 
 @main("Stratego") {
-    <div id="app" class="col-auto init-game-mid">
+
         <body class="backgroundd">
             <div class="row text-center">
                 <div class="col-12">
@@ -41,53 +41,13 @@
                     <h2 class="color-blue" id="game-header"></h2>
                 </div>
 
-                <div class="init-game-top">
-                    <img class="img-fluid img-game-top" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_top.jpg")"/>
+
+                <div id ="app">
+                    <play_game></play_game>
                 </div>
-                <div class="mid-border">
-                    <div class="row justify-content-center">
-                        <div class="col-auto init-game-left">
-                            <img class="img-game-left" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_left.jpg")"/>
-                        </div>
-                        <div id="gamefield" class="col-auto init-game-mid">
-                            <table class="matchfield">
-                                <tbody>
-                                    <template v-for="row in fields">
-                                        <tr>
-                                            <template v-for="aField in row.cols">
-                                                <td v-if="aField.isSet" class="char-pic field">
-                                                    <div v-if="aField.colour && this.playerListBufferBlue === 0 && this.currentPlayerIndex === 0" >
-                                                        <input class="fig-cards blue" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.figSrc" alt=""/>
-                                                    </div>
-                                                    <div v-else-if="!aField.colour && this.playerListBufferRed === 0 && this.currentPlayerIndex === 1">
-                                                        <input class="fig-cards red" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.figSrc" alt=""/>
-                                                    </div>
-                                                    <div v-else-if="this.currentPlayerIndex === 1 && aField.colour">
-                                                        <input class="fig-cards" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.blueSrc" alt="blue"/>
-                                                    </div>
-                                                    <div v-else-if="this.currentPlayerIndex === 0 && !aField.colour">
-                                                        <input class="fig-cards" type="image" v-on:click="clickSet(aField.row, aField.col)" :src="aField.redSrc" alt="red"/>
-                                                    </div>
-                                                </td>
-                                                <td v-else-if="aField.isWater" class="char-pic">
-                                                </td>
-                                                <td v-else class="char-pic field">
-                                                </td>
-                                            </template>
-                                        </tr>
-                                    </template>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-auto init-game-right">
-                            <img class="img-game-right" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_right.jpg")"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="init-game-bot">
-                    <img class="img-game-bot" src="@routes.Assets.versioned("images/media/Redwall_Stratego_Board_border_bottom.jpg")"/>
-                </div>
+
+
             </div>
         </body>
-    </div>
+
 }
