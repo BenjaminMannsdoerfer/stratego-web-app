@@ -197,16 +197,16 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     return ""
   }
   def getTopBorder(): String = {
-    return "/assets/images/media/Redwall_Stratego_Board_border_top.jpg"
+    "/assets/images/media/Redwall_Stratego_Board_border_top.jpg"
   }
   def getLeftBorder(): String = {
-    return "/assets/images/media/Redwall_Stratego_Board_border_left.jpg"
+    "/assets/images/media/Redwall_Stratego_Board_border_left.jpg"
   }
   def getRightBorder(): String = {
-    return "/assets/images/media/Redwall_Stratego_Board_border_right.jpg"
+    "/assets/images/media/Redwall_Stratego_Board_border_right.jpg"
   }
   def getBottomBorder(): String = {
-    return "/assets/images/media/Redwall_Stratego_Board_border_bottom.jpg"
+    "/assets/images/media/Redwall_Stratego_Board_border_bottom.jpg"
   }
 
   def socket: WebSocket = WebSocket.accept[String, String] { request =>
