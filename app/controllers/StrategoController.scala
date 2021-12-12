@@ -172,50 +172,50 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
 
   def getFigureCard(row: Int, col: Int): String = {
     gameController.getField.field(row, col).character.get.figure.name match {
-      case "F" => "/assets/images/media/figures/stratego-flag.svg"
-      case "B" => "/assets/images/media/figures/stratego-bomb.svg"
-      case "M" => "/assets/images/media/figures/stratego-marshal.svg"
-      case "1" => "/assets/images/media/figures/stratego-spy.svg"
-      case "2" => "/assets/images/media/figures/stratego-scout.svg"
-      case "3" => "/assets/images/media/figures/stratego-miner.svg"
-      case "4" => "/assets/images/media/figures/stratego-sergeant.svg"
-      case "5" => "/assets/images/media/figures/stratego-lieutenant.svg"
-      case "6" => "/assets/images/media/figures/stratego-captain.svg"
-      case "7" => "/assets/images/media/figures/stratego-major.svg"
-      case "8" => "/assets/images/media/figures/stratego-colonel.svg"
-      case "9" => "/assets/images/media/figures/stratego-general.svg"
+      case "F" => "../assets/images/media/figures/stratego-flag.svg"
+      case "B" => "../assets/images/media/figures/stratego-bomb.svg"
+      case "M" => "../assets/images/media/figures/stratego-marshal.svg"
+      case "1" => "../assets/images/media/figures/stratego-spy.svg"
+      case "2" => "../assets/images/media/figures/stratego-scout.svg"
+      case "3" => "../assets/images/media/figures/stratego-miner.svg"
+      case "4" => "../assets/images/media/figures/stratego-sergeant.svg"
+      case "5" => "../assets/images/media/figures/stratego-lieutenant.svg"
+      case "6" => "../assets/images/media/figures/stratego-captain.svg"
+      case "7" => "../assets/images/media/figures/stratego-major.svg"
+      case "8" => "../assets/images/media/figures/stratego-colonel.svg"
+      case "9" => "../assets/images/media/figures/stratego-general.svg"
     }
   }
   def getBlueCard(row: Int, col: Int): String = {
     if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 0) {
-      return "/assets/images/media/colors/stratego-blue.png"
+      return "../assets/images/media/colors/stratego-blue.png"
     }
     return ""
   }
 
   def getRedCard(row: Int, col: Int): String = {
     if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 1) {
-      return "/assets/images/media/colors/stratego-red.png"
+      return "../assets/images/media/colors/stratego-red.png"
     }
     return ""
   }
   def getBlackCard(row: Int, col: Int): String = {
         if (!gameController.getField.field(row, col).isSet) {
-          return "/assets/images/media/colors/stratego-black.PNG"
+          return "../assets/images/media/colors/stratego-black.PNG"
         }
     return ""
   }
   def getTopBorder(): String = {
-    "/assets/images/media/Redwall_Stratego_Board_border_top.jpg"
+    "../assets/images/media/Redwall_Stratego_Board_border_top.jpg"
   }
   def getLeftBorder(): String = {
-    "/assets/images/media/Redwall_Stratego_Board_border_left.jpg"
+    "../assets/images/media/Redwall_Stratego_Board_border_left.jpg"
   }
   def getRightBorder(): String = {
-    "/assets/images/media/Redwall_Stratego_Board_border_right.jpg"
+    "../assets/images/media/Redwall_Stratego_Board_border_right.jpg"
   }
   def getBottomBorder(): String = {
-    "/assets/images/media/Redwall_Stratego_Board_border_bottom.jpg"
+    "../assets/images/media/Redwall_Stratego_Board_border_bottom.jpg"
   }
 
   def socket: WebSocket = WebSocket.accept[String, String] { request =>
@@ -255,6 +255,8 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             else
               gameController.setPlayers(player1 + " " + player2)
             Ok(views.html.initGame(gameController))
+          case "init" =>
+            gameController.initMatchfield
           case "set" =>
             val charac = cmd.value("set")("charac").as[String]
             val row = cmd.value("set")("row").as[Int]
@@ -273,8 +275,6 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             gameController.attack(row, col, rowD, colD)
           case "connected" =>
         }
-        println("works!")
-        println(cmd.keys.head.toString.equals("large"))
         println("Sent Json to client" + msg)
         if (!cmd.keys.head.toString.equals("large") || cmd.keys.head.toString.equals("connected") || cmd.keys.head.toString.equals("setNames")) {
           out ! jsonObj().toString()
