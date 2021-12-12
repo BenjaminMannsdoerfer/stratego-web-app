@@ -130,7 +130,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       "playerListBufferRed" -> (gameController.playerListBuffer(1).characterList.size),
       "currentPlayerIndex" -> JsNumber(gameController.currentPlayerIndex),
       "currentPlayer" -> (gameController.playerListBuffer(gameController.currentPlayerIndex)).toString(),
-      "players" -> (gameController.playerList.head + " " + gameController.playerList(1)),
+      "players" -> (gameController.playerListBuffer.head + " " + gameController.playerListBuffer(1)),
       "matchField" -> JsArray(
         for {
           row <- 0 until gameController.getField.matrixSize
@@ -250,35 +250,44 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           case "setNames" =>
             val player1 = cmd.value("setNames")("player1").as[String]
             val player2 = cmd.value("setNames")("player2").as[String]
+            println(player1 + " " + player2)
             if (player1.isEmpty && player2.isEmpty)
               gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
-            else
+            else {
               gameController.setPlayers(player1 + " " + player2)
+              out ! jsonObj().toString()
+            }
             Ok(views.html.initGame(gameController))
+            out ! jsonObj().toString()
           case "init" =>
             gameController.initMatchfield
+            out ! jsonObj().toString()
           case "set" =>
             val charac = cmd.value("set")("charac").as[String]
             val row = cmd.value("set")("row").as[Int]
             val col = cmd.value("set")("col").as[Int]
             gameController.set(row, col, charac)
+            out ! jsonObj().toString()
           case "move" =>
             val dir = cmd.value("move")("dir").as[String].toCharArray
             val row = cmd.value("move")("row").as[Int]
             val col = cmd.value("move")("col").as[Int]
             gameController.move(dir(0), row, col)
+            out ! jsonObj().toString()
           case "attack" =>
             val row = cmd.value("attack")("row").as[Int]
             val col = cmd.value("attack")("col").as[Int]
             val rowD = cmd.value("attack")("rowD").as[Int]
             val colD = cmd.value("attack")("colD").as[Int]
             gameController.attack(row, col, rowD, colD)
+            out ! jsonObj().toString()
           case "connected" =>
         }
+        println(cmd.keys.head.toString)
+        println(!cmd.keys.head.toString.equals("connected"))
+        println(!cmd.keys.head.toString.equals("large"))
         println("Sent Json to client" + msg)
-        if (!cmd.keys.head.toString.equals("large") || cmd.keys.head.toString.equals("connected") || cmd.keys.head.toString.equals("setNames")) {
-          out ! jsonObj().toString()
-        }
+
     }
 
     reactions += {
