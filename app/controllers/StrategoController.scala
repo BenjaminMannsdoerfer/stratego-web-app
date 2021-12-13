@@ -244,11 +244,11 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           case "status" =>
             val status = cmd.value("status")("currentStatus").as[String]
             status match {
+              case "start" =>
+                out ! jsonStatus(status).toString()
               case "lobby" =>
                 out ! jsonStatus(status).toString()
-              case "initGame" =>
-                out ! jsonStatus(status).toString()
-              case "playGame" =>
+              case "Board" =>
                 out ! jsonStatus(status).toString()
             }
           case "small" =>
