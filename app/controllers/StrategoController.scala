@@ -112,9 +112,12 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     Ok(jsonObj())
   }
 
+  def jsonStatus(status: String): JsObject = {
+    Json.obj("status" -> status)
+  }
+
   def jsonNoGame(): JsObject = {
     Json.obj(
-      "border" -> Json.obj("bot" ->getBottomBorder(),"left"->getLeftBorder(), "top"->getTopBorder(), "right" -> getRightBorder()),
       "gameStatus" -> (gameController.gameStatus),
       "matchfieldSize" -> JsNumber(gameController.getSize),
       "players" -> (gameController.playerList.head + " " + gameController.playerList(1)),
@@ -238,6 +241,16 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       case msg: String =>
         val cmd = Json.parse(msg).as[JsObject]
         cmd.value.keySet.foreach {
+          case "status" =>
+            val status = cmd.value("status")("currentStatus").as[String]
+            status match {
+              case "lobby" =>
+                out ! jsonStatus(status).toString()
+              case "initGame" =>
+                out ! jsonStatus(status).toString()
+              case "playGame" =>
+                out ! jsonStatus(status).toString()
+            }
           case "small" =>
             val size = cmd.value("small")("matchfieldSize").as[Int]
             gameController.createNewMatchfieldSize(size)
@@ -250,14 +263,12 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           case "setNames" =>
             val player1 = cmd.value("setNames")("player1").as[String]
             val player2 = cmd.value("setNames")("player2").as[String]
-            println(player1 + " " + player2)
-            if (player1.isEmpty && player2.isEmpty)
+            if (player1.isEmpty && player2.isEmpty) {
               gameController.setPlayers(gameController.playerList(0).name + " " + gameController.playerList(1).name)
+            }
             else {
               gameController.setPlayers(player1 + " " + player2)
-              out ! jsonObj().toString()
             }
-            Ok(views.html.initGame(gameController))
             out ! jsonObj().toString()
           case "init" =>
             gameController.initMatchfield
@@ -281,11 +292,11 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             val colD = cmd.value("attack")("colD").as[Int]
             gameController.attack(row, col, rowD, colD)
             out ! jsonObj().toString()
+          case "join" =>
+            println("test")
+            out ! jsonObj().toString()
           case "connected" =>
         }
-        println(cmd.keys.head.toString)
-        println(!cmd.keys.head.toString.equals("connected"))
-        println(!cmd.keys.head.toString.equals("large"))
         println("Sent Json to client" + msg)
 
     }
@@ -293,7 +304,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     reactions += {
       case event: FieldChanged => sendJsonToClient
       case event: PlayerSwitch => sendJsonToClient
-      case event: PlayerChanged => sendNoGameToClient
+      case event: PlayerChanged => sendJsonToClient
       case event: MachtfieldInitialized => sendJsonToClient
       case event: GameFinished => sendJsonToClient
     }
