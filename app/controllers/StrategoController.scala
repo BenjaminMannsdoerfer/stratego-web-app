@@ -293,7 +293,6 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             gameController.attack(row, col, rowD, colD)
             out ! jsonObj().toString()
           case "join" =>
-            println("test")
             out ! jsonObj().toString()
           case "connected" =>
         }
