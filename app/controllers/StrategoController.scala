@@ -10,12 +10,16 @@ import play.api.libs.json.{JsArray, JsBoolean, JsNumber, JsObject, JsValue, Json
 import play.api.libs.streams.ActorFlow
 import akka.stream.Materializer
 
+import scala.collection.mutable.ListBuffer
 import scala.swing.Reactor
+import scala.util.parsing.json.JSON.headOptionTailToFunList
 
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
+  //val lobbyList = List.empty
+  val listLobby: ListBuffer[String] = ListBuffer.empty
 
   def printStratego: String = gameController.matchFieldToString + GameStatus.getMessage(gameController.gameStatus)
 
@@ -114,6 +118,11 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
 
   def jsonStatus(status: String): JsObject = {
     Json.obj("status" -> status)
+  }
+
+  def jsonLobby(player: String, lobby: List[String]): JsObject = {
+    Json.obj("player" -> player,
+    "lobby" -> Json.toJson(lobby))
   }
 
   def jsonNoGame(): JsObject = {
@@ -251,6 +260,18 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
               case "Board" =>
                 out ! jsonStatus(status).toString()
             }
+          case "lobby" =>
+            val player = cmd.value("lobby")("currentPlayer").as[String]
+            println(player)
+            val lobby = cmd.value("lobby")("updateLobby")("participants").as[List[String]]
+            //val myLobby = player :: lobbyList
+            if (listLobby.size < 2) {
+              println(listLobby.size)
+              listLobby.append(player)
+            }
+            println(listLobby)
+           out ! jsonLobby(player, listLobby.toList).toString()
+            println(jsonLobby(player, listLobby.toList).toString())
           case "small" =>
             val size = cmd.value("small")("matchfieldSize").as[Int]
             gameController.createNewMatchfieldSize(size)
