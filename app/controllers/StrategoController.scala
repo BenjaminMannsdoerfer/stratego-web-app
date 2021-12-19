@@ -137,14 +137,14 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     }
   }
   def getBlueCard(row: Int, col: Int): String = {
-    if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 0) {
+    if (gameController.getField.field(row, col).colour.get.value == 0) {
       return "../assets/images/media/colors/stratego-blue.png"
     }
     return ""
   }
 
   def getRedCard(row: Int, col: Int): String = {
-    if (gameController.playerListBuffer(0).characterList.size == 0 && gameController.getField.field(row, col).colour.get.value == 1) {
+    if (gameController.getField.field(row, col).colour.get.value == 1) {
       return "../assets/images/media/colors/stratego-red.png"
     }
     return ""
