@@ -12,8 +12,12 @@ import akka.stream.Materializer
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.Reactor
-import scala.util.parsing.json.JSON.headOptionTailToFunList
 
+
+import scala.swing.event.Event
+
+class LobbyEvent extends Event
+class StartGame extends Event
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
@@ -125,11 +129,9 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     "lobby" -> Json.toJson(lobby))
   }
 
-  def jsonNoGame(): JsObject = {
+  def jsonToLobby(): JsObject = {
     Json.obj(
-      "gameStatus" -> (gameController.gameStatus),
-      "matchfieldSize" -> JsNumber(gameController.getSize),
-      "players" -> (gameController.playerList.head + " " + gameController.playerList(1)),
+      "lobby" -> Json.toJson(listLobby),
     )
   }
 
@@ -263,11 +265,14 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           case "lobby" =>
             val player = cmd.value("lobby")("currentPlayer").as[String]
             println(player)
-            val lobby = cmd.value("lobby")("updateLobby")("participants").as[List[String]]
+            //val lobby = cmd.value("lobby")("updateLobby")("participants").as[List[String]]
             //val myLobby = player :: lobbyList
             if (listLobby.size < 2) {
               println(listLobby.size)
               listLobby.append(player)
+            }
+            if (listLobby.size == 2) {
+              gameController.publish(new LobbyEvent)
             }
             println(listLobby)
            out ! jsonLobby(player, listLobby.toList).toString()
@@ -290,6 +295,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             else {
               gameController.setPlayers(player1 + " " + player2)
             }
+            gameController.publish(new StartGame)
             out ! jsonObj().toString()
           case "init" =>
             gameController.initMatchfield
@@ -327,6 +333,8 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       case event: PlayerChanged => sendJsonToClient
       case event: MachtfieldInitialized => sendJsonToClient
       case event: GameFinished => sendJsonToClient
+      case event: LobbyEvent => sendLobbyToClient
+      case event: StartGame => startGame
     }
 
     def sendJsonToClient = {
@@ -334,8 +342,12 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       out ! jsonObj().toString()
     }
 
-    def sendNoGameToClient = {
-      out ! jsonNoGame().toString()
+    def sendLobbyToClient = {
+      out ! jsonToLobby().toString()
+    }
+
+    def startGame: Unit = {
+      out ! jsonStatus("Board").toString()
     }
   }
 }
