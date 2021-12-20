@@ -18,6 +18,7 @@ import scala.swing.event.Event
 
 class LobbyEvent extends Event
 class StartGame extends Event
+class NewGame extends Event
 
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
@@ -257,6 +258,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             status match {
               case "start" =>
                 out ! jsonStatus(status).toString()
+                gameController.publish(new NewGame)
               case "lobby" =>
                 out ! jsonStatus(status).toString()
               case "Board" =>
@@ -336,6 +338,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
       case event: GameFinished => sendJsonToClient
       case event: LobbyEvent => sendLobbyToClient
       case event: StartGame => startGame
+      case event: NewGame => newGame
     }
 
     def sendJsonToClient = {
@@ -349,6 +352,11 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
 
     def startGame: Unit = {
       out ! jsonStatus("Board").toString()
+      //out ! jsonToLobby().toString()
+    }
+
+    def newGame: Unit = {
+      out ! jsonStatus("start").toString()
       //out ! jsonToLobby().toString()
     }
   }
