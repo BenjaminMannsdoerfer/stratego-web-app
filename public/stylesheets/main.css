@@ -101,7 +101,7 @@
     }
 
     .matchfield {
-        background-image: url(../images/media/matchfield.png);
+        background-image: url(../../../Stratego-Vue/stratego-vue/src/assets/game/matchfield.png);
     }
 
     .blue {
@@ -186,7 +186,7 @@
     }
 
     .matchfield {
-        background-image: url(../images/media/matchfield_400x400.png);
+        background-image: url(../../../Stratego-Vue/stratego-vue/src/assets/game/matchfield_400x400.png);
         height: 400px;
     }
 
