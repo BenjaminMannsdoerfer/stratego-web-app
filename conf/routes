@@ -4,34 +4,6 @@
 
 # Controller for Stratego
 
-GET     /                               controllers.StrategoController.home
-
-GET     /about                          controllers.StrategoController.about
-
-GET     /game                           controllers.StrategoController.game
-
-GET     /stratego                       controllers.StrategoController.stratego
-
-GET     /set                            controllers.StrategoController.set
-
-GET     /setPlayer                      controllers.StrategoController.setPlayer(player1: String, player2:String)
-
-GET     /setPlayer/:player1/:player2    controllers.StrategoController.setPlayer(player1: String, player2:String)
-
-GET     /init                            controllers.StrategoController.init
-
-GET     /setChar                        controllers.StrategoController.setCharacter(row: Int, col:Int, charac: Char)
-
-GET     /setCharacter/:row/:col/:charac controllers.StrategoController.setCharacter(row: Int, col:Int, charac: Char)
-
-GET     /moveChar/:row/:col             controllers.StrategoController.move(dir: Char, row:Int, col:Int)
-
-GET     /move/:dir/:row/:col            controllers.StrategoController.move(dir: Char, row:Int, col:Int)
-
-GET     /attackChar                     controllers.StrategoController.attack(rowA:Int, colA:Int, rowD:Int, colD:Int)
-
-GET     /attack/:rowA/:colA/:rowD/:colD controllers.StrategoController.attack(rowA:Int, colA:Int, rowD:Int, colD:Int)
-
 GET     /save                           controllers.StrategoController.saveGame
 
 GET     /load                           controllers.StrategoController.loadGame
@@ -39,12 +11,6 @@ GET     /load                           controllers.StrategoController.loadGame
 GET     /undo                           controllers.StrategoController.undoGame
 
 GET     /redo                           controllers.StrategoController.redoGame
-
-GET     /small                          controllers.StrategoController.smallGame
-
-GET     /medium                         controllers.StrategoController.mediumGame
-
-GET     /large                          controllers.StrategoController.largeGame
 
 GET     /json                           controllers.StrategoController.gameToJson
 
