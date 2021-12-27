@@ -26,6 +26,10 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
   //val lobbyList = List.empty
   val listLobby: ListBuffer[String] = ListBuffer.empty
 
+  def home: Action[AnyContent] = Action {
+    Ok(views.html.index())
+  }
+
   def saveGame = Action {
     gameController.save
     Ok(views.html.playGame(gameController))
