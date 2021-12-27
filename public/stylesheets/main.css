@@ -62,8 +62,8 @@
 
 @media screen and (min-width: 875px) {
     .char-pic {
-        height: 80px;
-        width: 80px;
+        height: 80px !important;
+        width: 80px !important;
     }
 
     .fig-cards {
@@ -92,6 +92,7 @@
 
     .init-game-right {
         padding: 0 !important;
+        flex: 0 0 auto !important;
     }
 
     .init-game-bot {
@@ -100,7 +101,7 @@
     }
 
     .matchfield {
-        background-image: url(../images/media/matchfield.png);
+        background-image: url(../../../Stratego-Vue/stratego-vue/src/assets/game/matchfield.png);
     }
 
     .blue {
@@ -166,6 +167,7 @@
         padding: 0 !important;
         width: 19px;
         height: 400px;
+        flex: 0 0 auto !important;
     }
 
     .img-game-right {
@@ -184,7 +186,7 @@
     }
 
     .matchfield {
-        background-image: url(../images/media/matchfield_400x400.png);
+        background-image: url(../../../Stratego-Vue/stratego-vue/src/assets/game/matchfield_400x400.png);
         height: 400px;
     }
 
