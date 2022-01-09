@@ -57,3 +57,6 @@ yourgame.log
 
 # VSCode
 .vscode/
+
+# env
+.env
