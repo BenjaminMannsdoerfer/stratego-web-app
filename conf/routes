@@ -3,6 +3,7 @@
 # ~~~~
 
 # Controller for Stratego
+GET     /                               controllers.StrategoController.home
 
 GET     /save                           controllers.StrategoController.saveGame
 
