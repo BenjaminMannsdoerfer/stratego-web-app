@@ -5,16 +5,6 @@
 # Controller for Stratego
 GET     /                               controllers.StrategoController.home
 
-GET     /save                           controllers.StrategoController.saveGame
-
-GET     /load                           controllers.StrategoController.loadGame
-
-GET     /undo                           controllers.StrategoController.undoGame
-
-GET     /redo                           controllers.StrategoController.redoGame
-
-GET     /json                           controllers.StrategoController.gameToJson
-
 GET     /websocket                      controllers.StrategoController.socket
 
 

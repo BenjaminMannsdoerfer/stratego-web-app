@@ -30,32 +30,6 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     Ok(views.html.index())
   }
 
-  def saveGame = Action {
-    gameController.save
-    Ok(views.html.playGame(gameController))
-  }
-
-  def loadGame = Action {
-    gameController.createNewMatchfieldSize(gameController.getSize)
-    gameController.setPlayers("PlayerBlue PlayerRed")
-    gameController.load
-    Ok(views.html.playGame(gameController))
-  }
-
-  def undoGame = Action {
-    gameController.undo
-    Ok(views.html.playGame(gameController))
-  }
-
-  def redoGame = Action {
-    gameController.redo
-    Ok(views.html.playGame(gameController))
-  }
-
-  def gameToJson: Action[AnyContent] = Action {
-    Ok(jsonObj())
-  }
-
   def getFigureCard(row: Int, col: Int): String = {
     gameController.getField.field(row, col).character.get.figure.name match {
       case "F" => "../assets/images/media/figures/stratego-flag.svg"
@@ -76,20 +50,20 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     if (gameController.getField.field(row, col).colour.get.value == 0) {
       return "../assets/images/media/colors/stratego-blue.png"
     }
-    return ""
+   ""
   }
 
   def getRedCard(row: Int, col: Int): String = {
     if (gameController.getField.field(row, col).colour.get.value == 1) {
       return "../assets/images/media/colors/stratego-red.png"
     }
-    return ""
+    ""
   }
   def getBlackCard(row: Int, col: Int): String = {
     if (!gameController.getField.field(row, col).isSet) {
       return "../assets/images/media/colors/stratego-black.PNG"
     }
-    return ""
+    ""
   }
   def getTopBorder(): String = {
     "../assets/images/media/Redwall_Stratego_Board_border_top.jpg"
