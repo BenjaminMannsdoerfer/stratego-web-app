@@ -23,7 +23,6 @@ class NewGame extends Event
 @Singleton
 class StrategoController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer) extends AbstractController(cc) {
   val gameController: ControllerInterface = Stratego.controller
-  //val lobbyList = List.empty
   val listLobby: ListBuffer[String] = ListBuffer.empty
 
   def home: Action[AnyContent] = Action {
@@ -175,8 +174,6 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
           case "lobby" =>
             val player = cmd.value("lobby")("currentPlayer").as[String]
             println(player)
-            //val lobby = cmd.value("lobby")("updateLobby")("participants").as[List[String]]
-            //val myLobby = player :: lobbyList
             if (listLobby.size < 2) {
               println(listLobby.size)
               listLobby.append(player)
@@ -186,7 +183,6 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
             }
             println(listLobby)
            out ! jsonLobby(player, listLobby.toList).toString()
-            println(jsonLobby(player, listLobby.toList).toString())
           case "small" =>
             val size = cmd.value("small")("matchfieldSize").as[Int]
             gameController.createNewMatchfieldSize(size)
@@ -262,6 +258,7 @@ class StrategoController @Inject()(cc: ControllerComponents)(implicit system: Ac
     }
 
     def newGame: Unit = {
+      gameController.createNewMatchfieldSize(gameController.getSize)
       out ! jsonStatus("start").toString()
     }
   }
