@@ -2,7 +2,7 @@
 
 # HTWG Stratego Backend
 
-This is a Backend of [stratego-web-app](https://benjaminmannsdoerfer.github.io/stratego-vue-app/#/) using Play for the Lecture Web Technologies at HTWG.
+This is a Backend of [stratego-vue-app](https://benjaminmannsdoerfer.github.io/stratego-vue-app/#/) using Play for the Lecture Web Technologies at HTWG.
 
 ### Stable Java version: 
 ```
